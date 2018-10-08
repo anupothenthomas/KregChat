@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Forum Create</title>
+</head>
+<body>
+
+ <div class="generic-container" style="margin-left:50px;">
+        
+            
+              <label>Fill in the forum details : </label>
+                 <br><br>
+              
+               <div class="row"> 
+                 <div class="form-group col-md-12"> 
+                    <label class="col-md-2 control-lable" for="title">Title</label>
+                      <div class="col-md-7">
+                       <input type="text" ng-model="forum.title" id="title" class="title form-control input-sm" placeholder="Enter forum title" required ng-minlength="1" ng-maxlength="500">
+                   </div>
+                 </div>
+             </div>
+             
+             
+             
+               <div class="row"> 
+                 <div class="form-group col-md-12"> 
+                    <label class="col-md-2 control-lable" for="title">Category</label>
+                      <div class="col-md-7">
+                       <input type="text" ng-model="forum.category" id="title" class="title form-control input-sm" placeholder="Enter forum category" required ng-minlength="1" ng-maxlength="500">
+                   </div>
+                 </div>
+             </div>
+             
+             
+           <div class="row">
+             <div class="form-group col-md-12">
+                 <label class="col-md-2 control-lable" for="description">Description</label>
+                   <div class="col-md-7">
+                     <textarea rows="10" cols="100" ng-model="forum.description" id="description"
+                            class="description form-control input-sm" placeholder="forum description" 
+                            required ng-minlength="1" ng-maxlength="500">
+                            </textarea>
+                            
+                            </div>
+                            </div>
+                            </div>
+                            
+                              <div class="row">
+             <div class="form-actions floatRight">
+                <input type="button" ng-click="submit()" value="Create Forum" class="btn btn-primary btn-sm">
+                  <button type="button" ng-click="reset()" class="btn btn-warning btn-sm">Reset Forum</button>
+               </div>
+             </div>
+           
+          </div> 
+</body>
+</body>
+</html>

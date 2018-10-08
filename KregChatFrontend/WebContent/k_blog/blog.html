@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+
+body{ 
+    background-color: #e9eef1;
+    margin: 0px;
+    padding: 0px;
+}
+
+@media (min-width: 1200px){
+.container {
+    width: 1170px;
+}
+
+}
+
+* {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.row {
+    margin-right: -15px;
+    margin-left: -15px;
+}
+
+.col-xs-12 {
+    width: 100%;
+}
+
+.blog-grids {
+    overflow: hidden;
+    margin: 0 -15px;
+}
+
+.blog-grids .grid {
+    background-color: #fff;
+    width: calc(90% - 90px);
+    float: left;
+    padding: 15px;
+    margin: 20px 15px 15px;
+    border-radius: 10px;
+    -webkit-box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+}
+
+.entry-media img {
+    border-radius: 10px;
+    width: 100%;
+    max-height: 188px;
+}
+
+.entry-body {
+    padding: 30px 20px;
+}
+
+.entry-body .cat {
+    font-family: "Ubuntu", sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    color: #6220d9;
+    text-transform: uppercase;
+}
+
+.entry-body h3 {
+    font-size: 21px;
+    font-weight: 600;
+    line-height: 1.30em;
+    margin: 3px 0 0.73em;
+}
+
+.entry-body h3 a {
+    color: #41516a;
+}
+
+.entry-body h3 a:hover {
+    color: #6220d9;
+    text-decoration: none;
+}
+
+.entry-body p {
+    margin-bottom: 2em;
+    color: #90949a;
+    line-height: 1.8em;
+}
+
+.read-more-date {
+    position: relative;
+}
+
+.read-more-date a {
+    font-family: "Oswald", sans-serif;
+    font-size: 16px;
+    font-size: 1.06667rem;
+    font-weight: 600;
+    color: #41516a;
+    text-transform: uppercase;
+}
+
+.read-more-date .date {
+    position: absolute;
+    right: 0;
+    color: #90949a;
+}
+</style>
+
+<meta charset="ISO-8859-1">
+<title>KregChat: BlogList</title>
+</head>
+<body>
+	<h1 class="text text-primary" ng-if="AllBlogs.length == 0">No
+		Blogs Yet</h1>
+
+<!-- 	<div class="container" ng-if="AllBlogs.length != 0" style="margin-left:70px;"> -->
+<!-- 		<div class="col-md-4 well" ng-repeat="x in AllBlogs"> -->
+
+<!-- 			<h4>{{x.title}}</h4> -->
+<!-- 			<hr> -->
+<!-- 			{{x.description}} -->
+<!-- 			<hr> -->
+<!-- 			<hr> -->
+<!-- 			{{x.date}} -->
+<!-- 			<hr> -->
+<!-- 			<a class="btn btn-primary pull-right marginBottom10" -->
+<!-- 				style="bottom: 20px; position: relative; margin-right: 20px;" -->
+<!-- 				data-toggle="modal" data-target="#editBlogModal" -->
+<!-- 				ng-click="EditBlog(x.id)">Edit Blog</a> -->
+
+<!-- 			<button class="btn btn-danger" ng-click="DeleteBlog(x.id)">Delete</button> -->
+<!-- 		</div> -->
+<!-- 	</div> -->
+<!-- <!-- ------------------------------------------------------------------------------------- --> -->
+
+<div class="container" ng-if="AllBlogs.length != 0">
+	<div class="row">
+		<div class="col col-md-4" ng-repeat="x in AllBlogs">
+                        <div class="blog-grids" >
+                            <div class="grid">
+                                <div class="entry-media">
+                                    <img src="http://www.csshint.com/wp-content/uploads/2017/09/beautiful-buttons-effect.jpg" alt="">
+                                </div>
+                                <div class="entry-body">
+                                    <span class="cat">{{x.title}}</span>
+                                    <h3><a href="#">{{x.title}}</a></h3>
+                                    <p>{{x.description}}</p>
+                                    <div class="read-more-date">
+                                        <a href="#">Read More..</a>
+                                    </div>
+                                    
+                                     <div class="date" style="color:#9e9c9c;">{{x.date}}</div>
+                                     <br>
+                                    <button class="btn btn-danger" ng-click="DeleteBlog(x.id)">Delete</button>
+                                    <button class="btn btn-primary" ng-click="EditBlog(x.id)" data-toggle="modal" data-target="#editBlogModal">Edit</button>
+                                </div>
+                            </div></div></div></div></div>
+
+	<!-- ------------------------------------------------------------------------ -->
+	<!-- -------------------------UPDATE/EDIT BLOG MODAL------------------------- -->
+	<!-- ------------------------------------------------------------------------ -->
+
+		<div id="editBlogModal" class="modal fade" role="dialog">
+			<div class="modal-dialog">
+	
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h4 class="modal-title">Edit Blog</h4>
+					</div>
+					<div class="modal-body">
+	
+						<div class="well">
+							<input type="text" class="form-control" placeholder="Enter Title"
+								ng-model="ETitle.value" ng-change="ETitle.validate()"> <br>
+							<div ng-if="ETitle.touched && ETitle.error"
+								class="text text-default">
+								<h1>Title must be between 2 and 20 characters</h1>
+							</div>
+							<br>
+	
+	
+							<h5 class="modal-title">Edit Description</h5>
+							<textarea class="form-control" placeholder="Enter Description"
+								style="resize: none;" ng-model="EDescription.value"
+								ng-change="EDescription.validate()"></textarea>
+							<br>
+							<div ng-if="EDescription.touched && EDescription.error"
+								class="text text-default">
+								<h1>Title must be between 2 and 20 characters</h1>
+							</div>
+							<br>
+							<button class="btn btn-danger"
+								style="margin-left: 25%; margin-right: 25%; width: 50%;"
+								ng-disabled='!( !ETitle.error && ETitle.touched && !EDescription.error && EDescription.touched)'
+								ng-click="EditBlogToDB()">Edit</button>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	
+
+</body>
+</html>

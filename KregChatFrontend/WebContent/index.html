@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+<head>
+<head lang="en">
+
+<link
+	href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css"
+	rel="stylesheet" id="bootstrap-css">
+<script
+	src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+
+<!-- Website CSS style -->
+<link href="css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Website Font style -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
+<link rel="stylesheet" href="style.css">
+
+<link href="https://fonts.googleapis.com/css?family=Oswald|Ubuntu"
+	rel="stylesheet">
+
+<!-- Google Fonts -->
+<link href='https://fonts.googleapis.com/css?family=Passion+One'
+	rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Oxygen'
+	rel='stylesheet' type='text/css'>
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	
+<!-- Latest compiled JavaScript -->
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<!-- ANGULAR CDN  -->
+<!-- <script
+	src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.28//angular-route.min.js"></script> -->
+
+<!-- GOOGLE FONTS -->
+<link href="https://fonts.googleapis.com/css?family=Anton|Acme"
+	rel="stylesheet">
+
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+<link type="text/css" rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css" />
+
+
+<meta charset="utf-8">
+<meta charset="ISO-8859-1">
+<title>KregChat</title>
+
+</head>
+
+<script type="text/javascript"
+	src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.7/angular.min.js"></script>
+<script type="text/javascript"
+	src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.7/angular-route.min.js"></script>
+
+
+<script type="text/javascript" src="app.js"></script>
+<script type="text/javascript" src="k_blog/BlogController.js"></script>
+<script type="text/javascript" src="k_forum/ForumController.js"></script>
+<script type="text/javascript" src="k_job/JobController.js"></script>
+<script type="text/javascript" src="HomeController.js"></script>
+<script type="text/javascript" src="ChatController.js"></script>
+<<<<<<< HEAD
+<script type="text/javascript" src="FriendsController.js"></script>
+
+=======
+>>>>>>> 65cfe5abccb4b2323721699ccf976e10b5c2384d
+
+
+<body ng-app="KregChatFrontend">
+
+	<nav class="navbar"
+		style="background-color: #000000; margin-top: 0px; font-family: 'Oswald', sans-serif;">
+		<div class="container-fluid">
+			<div class="navbar-header">
+
+				<ul class="nav navbar-nav navbar-left" ng-show="!$root.LoginStatus">
+
+					<a href="#!/home" style="color: white;"><img
+						src="resources/images/kregchatlogo.jpg"
+						style="width: 50px; height: 50px;" alt="Kregos"></a>
+
+				</ul>
+			</div>
+
+
+			<ul class="nav navbar-nav" ng-show="!$root.LoginStatus">
+
+							
+					<li><a href="#!/home"
+					style="color: white; font-family: 'Oswald', sans-serif;">Home</a></li>
+					
+<<<<<<< HEAD
+					<li><a href="#!/friends"
+					style="color: white; font-family: 'Oswald', sans-serif;">Friends</a></li>
+					
+=======
+>>>>>>> 65cfe5abccb4b2323721699ccf976e10b5c2384d
+					<li><a href="#!/chats"
+					style="color: white; font-family: 'Oswald', sans-serif;">Chats</a></li>
+					
+					
+
+				<li class="dropdown"><a class="dropdown-toggle"
+<<<<<<< HEAD
+					data-toggle="dropdown" href="#" style="color: white;">Blogs <span class="caret"></span></a>
+=======
+					data-toggle="dropdown" href="#">Blogs <span class="caret"></span></a>
+>>>>>>> 65cfe5abccb4b2323721699ccf976e10b5c2384d
+					<ul class="dropdown-menu">
+						<li><a href="#!/blog">View Blog</a></li>
+						<li><a href="#!/create_blog">Add Blog</a></li>
+					</ul></li>
+
+				<li class="dropdown"><a class="dropdown-toggle"
+<<<<<<< HEAD
+					data-toggle="dropdown" href="#" style="color: white;">Forum <span class="caret"></span></a>
+=======
+					data-toggle="dropdown" href="#">Forum <span class="caret"></span></a>
+>>>>>>> 65cfe5abccb4b2323721699ccf976e10b5c2384d
+					<ul class="dropdown-menu">
+						<li><a href="#!/list_forum">View Forum</a></li>
+						<li><a href="#!/create_forum">Add Forum</a></li>
+					</ul></li>
+					
+					<li class="dropdown"><a class="dropdown-toggle"
+<<<<<<< HEAD
+					data-toggle="dropdown" href="#" style="color: white;">Jobs <span class="caret"></span></a>
+=======
+					data-toggle="dropdown" href="#">Jobs <span class="caret"></span></a>
+>>>>>>> 65cfe5abccb4b2323721699ccf976e10b5c2384d
+					<ul class="dropdown-menu">
+						<li><a href="#!/list_job/">View Job</a></li>
+						<li><a href="#!/job">Add Job</a></li>
+					</ul></li>
+
+
+			</ul>
+			<ul class="nav navbar-nav navbar-right">
+				<li>
+					<div class="container-fluid">
+
+						<div class="row" ng-show="!$root.LoginStatus">
+
+							<div class="col-lg-4">
+								<br> <label style="color: white;">WELCOME
+									{{$root.LoginEmail}}</label>
+							</div>
+
+							<div class="col-lg-4">
+								<br>
+								<button class="btn btn-link" style="color: white;"
+									ng-click="logout()">LOG OUT</button>
+							</div>
+
+						</div>
+					</div>
+
+				</li>
+			</ul>
+		</div>
+	</nav>
+	<div>
+		<div>
+			
+
+		</div>
+		<div ng-view></div>
+
+	</div>
+</body>
+</html>

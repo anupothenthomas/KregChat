@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>View Forum</title>
+
+</head>
+
+<h1 class="text text-primary" ng-if="AllForums.length == 0">No
+	Forums Yet</h1>
+
+<div class="container" ng-if="AllForums.length != 0" style="margin-left:70px;">
+	<div class="col-md-4 well" ng-repeat="x in AllForums">
+
+		<h4>{{x.title}}</h4>
+		<hr>
+		{{x.description}}
+		<hr>
+
+		<hr>
+		{{x.category}}
+		<hr>
+
+		<a class="btn btn-primary pull-right marginBottom10"
+			style="bottom: 20px; position: relative; margin-right: 20px;"
+			data-toggle="modal" data-target="#editForumModal"
+			ng-click="EditForum(x.id)">Edit Forum</a>
+
+		<button class="btn btn-danger" ng-click="DeleteForum(x.id)">Delete</button>
+	</div>
+</div>
+
+
+<!-- ------------------------------------------------------------------------ -->
+<!-- -------------------------UPDATE/EDIT BLOG MODAL------------------------- -->
+<!-- ------------------------------------------------------------------------ -->
+
+
+<div id="editForumModal" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">Edit Forum</h4>
+			</div>
+			<div class="modal-body">
+
+				<div class="well">
+
+					<input type="text" class="form-control" placeholder="Enter Title"
+						ng-model="ETitle.value" ng-change="ETitle.validate()"> <br>
+
+					<div ng-if="ETitle.touched && ETitle.error"
+						class="text text-default">
+						<h1>Title must be between 2 and 20 characters</h1>
+					</div>
+
+					<br>
+
+					<textarea class="form-control" placeholder="Enter Description"
+						style="resize: none;" ng-model="EDescription.value"
+						ng-change="EDescription.validate()"></textarea>
+
+					<br>
+
+					<div ng-if="EDescription.touched && EDescription.error"
+						class="text text-default">
+						<h1>Title must be between 2 and 20 characters</h1>
+					</div>
+
+					<br>
+
+					<button class="btn btn-danger"
+						style="margin-left: 25%; margin-right: 25%; width: 50%;"
+						ng-disabled='!( !ETitle.error && ETitle.touched && !EDescription.error && EDescription.touched)'
+						ng-click="EditForumToDB()">Edit</button>
+				</div>
+
+
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+
+	</div>
+</div>
+
+
+
+
+</html>
