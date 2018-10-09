@@ -19,11 +19,8 @@ public class Users
 	private String profilePicUrl;
 	
 	private List<String> friends = new ArrayList<String>();
-<<<<<<< HEAD
 	private List<String> requestsIn = new ArrayList<String>();
-=======
 	private List<String> requests = new ArrayList<String>();
->>>>>>> 65cfe5abccb4b2323721699ccf976e10b5c2384d
 	private List<String> requestsOut = new ArrayList<String>();
 	
 	
@@ -87,19 +84,17 @@ public class Users
 	public void setFriends(List<String> friends) {
 		this.friends = friends;
 	}
-<<<<<<< HEAD
 	public List<String> getRequestsIn() {
 		return requestsIn;
 	}
 	public void setRequestsIn(List<String> requestsIn) {
 		this.requestsIn = requestsIn;
-=======
+	}
 	public List<String> getRequests() {
 		return requests;
 	}
 	public void setRequests(List<String> requests) {
 		this.requests = requests;
->>>>>>> 65cfe5abccb4b2323721699ccf976e10b5c2384d
 	}
 	public List<String> getRequestsOut() {
 		return requestsOut;

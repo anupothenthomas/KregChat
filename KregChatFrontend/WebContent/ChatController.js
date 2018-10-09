@@ -55,7 +55,7 @@ KregChatFrontend.controller('ChatController', [
 						if (data.data.startsWith("disconnect")) {
 
 							console.log("disconnect");
-<<<<<<< HEAD
+
 							console.log(data.data.split(":")[1]);
 
 							$scope.$apply($scope.AllOnliners.splice(
@@ -75,35 +75,8 @@ KregChatFrontend.controller('ChatController', [
 							$scope.$apply($scope.messages.push(JSON
 									.parse(data.data)));
 
-						}
+						}	
 
-=======
-							console.log( data.data.split(":")[1] );
-							
-							$scope.$apply(
-									$scope.AllOnliners.splice($scope.AllOnliners.indexOf(data.data.split(":")[1]),1)
-							);
-							
-						}else if (data.data.startsWith("connect")) {
-
-							console.log("connect");
-							console.log( data.data.split(":")[1] );
-							
-							$scope.$apply(
-									$scope.AllOnliners.push(data.data.split(":")[1])
-							);
-							
-						} 
-						else {
-
-							$scope.$apply($scope.messages.push(JSON
-									.parse(data.data)));
-							
-						}
-
-				
-
->>>>>>> 65cfe5abccb4b2323721699ccf976e10b5c2384d
 					}
 
 					window.setTimeout(function() {
@@ -185,7 +158,6 @@ KregChatFrontend.controller('ChatController', [
 				}
 			}
 
-<<<<<<< HEAD
 			$scope.currentChatHeads = []
 
 			$scope.addChatHead = function(arg) {
@@ -206,6 +178,4 @@ KregChatFrontend.controller('ChatController', [
 
 			}
 
-=======
->>>>>>> 65cfe5abccb4b2323721699ccf976e10b5c2384d
 		} ]);

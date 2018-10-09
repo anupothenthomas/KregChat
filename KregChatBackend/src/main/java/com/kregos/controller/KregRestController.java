@@ -45,12 +45,9 @@ public class KregRestController
 	JobDAO jdao;
 
 	
-<<<<<<< HEAD
 
 /*--------------------------------------------DELETE BLOG ---------------------------------------------*/
-=======
 	/*-------------------------DELETE BLOG --------------------------*/
->>>>>>> 65cfe5abccb4b2323721699ccf976e10b5c2384d
 	
 	@RequestMapping(value="/deleteBlog",method=RequestMethod.POST)
 	public ResponseEntity<String> deleteBlog( @RequestBody String body  )
@@ -82,11 +79,8 @@ public class KregRestController
 	}
 	
 
-<<<<<<< HEAD
 /*----------------------------------------------FETCH ALL BLOGS -----------------------------------------------*/
-=======
 	/*-------------------------FETCH ALL BLOGS --------------------------*/
->>>>>>> 65cfe5abccb4b2323721699ccf976e10b5c2384d
 	
 	@RequestMapping(value="/fetchAllBlogs",method=RequestMethod.GET)
 	public ResponseEntity<String> fetchAllBlogs()
@@ -111,12 +105,9 @@ public class KregRestController
 		
 	}
 	
-<<<<<<< HEAD
 /*---------------------------------------------ADD BLOGS ---------------------------------------------*/
-=======
 	/*-------------------------ADD BLOGS --------------------------*/
 
->>>>>>> 65cfe5abccb4b2323721699ccf976e10b5c2384d
 	
 	@RequestMapping(value="/addBlog",method=RequestMethod.POST)
 	public ResponseEntity<String> addBlog( @RequestBody String body  )
@@ -155,12 +146,9 @@ public class KregRestController
 	}
 	
 	
-<<<<<<< HEAD
 
 /*----------------------------------------------EDIT BLOGS --------------------------------------------------*/
-=======
 	/*-------------------------EDIT BLOGS --------------------------*/
->>>>>>> 65cfe5abccb4b2323721699ccf976e10b5c2384d
 
 	@RequestMapping(value = "/editBlog", method = RequestMethod.POST)
 	public ResponseEntity<String> editBlog(@RequestBody String body) {
@@ -197,14 +185,11 @@ public class KregRestController
 
 	
 	
-<<<<<<< HEAD
 /*-------------------------------------------------------------------------------------------------------*/
 	
 	/*-----------------------------------------FETCH ALL FORUMS-------------------------------------------*/
-=======
-/*-------------------------------------------------------------------------------------*/
-	/*--------------------------FETCH ALL FORUMS-------------------------*/
->>>>>>> 65cfe5abccb4b2323721699ccf976e10b5c2384d
+
+
 	
 	@RequestMapping(value = "/fetchAllForums", method = RequestMethod.GET)
 	public ResponseEntity<String> fetchAllForums() {
@@ -225,12 +210,8 @@ public class KregRestController
 	}
 	
 	
-<<<<<<< HEAD
 /*-----------------------------------------------ADD FORUMS-------------------------------------------------*/
 	
-=======
-	/*----------------------------ADD FORUMS----------------------------*/
->>>>>>> 65cfe5abccb4b2323721699ccf976e10b5c2384d
 	@RequestMapping(value = "/addForum", method = RequestMethod.POST)
 	public ResponseEntity<String> AddForum(@RequestBody String body) {
 		System.out.println("Adding Forum.....");
@@ -264,12 +245,8 @@ public class KregRestController
 		return new ResponseEntity<String>("{\"msg\": \"Success\"}", HttpStatus.OK);
 	}
 	
-<<<<<<< HEAD
-
 /*-----------------------------------------------EDIT FORUM------------------------------------------------------*/
-=======
-	/*------------------------EDIT FORUM------------------------*/
->>>>>>> 65cfe5abccb4b2323721699ccf976e10b5c2384d
+
 
 	@RequestMapping(value = "/editForum", method = RequestMethod.POST)
 	public ResponseEntity<String> editForum(@RequestBody String body) {
@@ -304,12 +281,9 @@ public class KregRestController
 		return new ResponseEntity<String>("{\"msg\": \"Success\"}", HttpStatus.OK);
 	}
 	
-<<<<<<< HEAD
 
 /*-------------------------------------------------DELETE FORUM---------------------------------------------------*/
-=======
-	/*------------------------DELETE FORUM------------------------*/
->>>>>>> 65cfe5abccb4b2323721699ccf976e10b5c2384d
+
 	
 	@RequestMapping(value = "/deleteForum", method = RequestMethod.POST)
 	public ResponseEntity<String> deleteForum(@RequestBody String body) {
@@ -339,11 +313,9 @@ public class KregRestController
 
 
 
-<<<<<<< HEAD
+
 /*--------------------------------------------FETCH ALL USERS-----------------------------------------------*/
-=======
-/*----------------------------FETCH ALL USERS----------------------*/
->>>>>>> 65cfe5abccb4b2323721699ccf976e10b5c2384d
+
 
 @RequestMapping(value = "/fetchAllUsers", method = RequestMethod.GET)
 public ResponseEntity<String> fetchAllUsers() {
@@ -363,11 +335,9 @@ public ResponseEntity<String> fetchAllUsers() {
 
 }
 
-<<<<<<< HEAD
 /*-----------------------------------------------FETCH ALL ONLINERS---------------------------------------------*/
 
-=======
->>>>>>> 65cfe5abccb4b2323721699ccf976e10b5c2384d
+
 @RequestMapping(value = "/fetchAllOnliners", method = RequestMethod.GET)
 public ResponseEntity<String> fetchAllOnliners( HttpServletRequest req ) {
 	System.out.println("fetchAllOnliners");
@@ -392,11 +362,9 @@ public ResponseEntity<String> fetchAllOnliners( HttpServletRequest req ) {
 
 }
 
-<<<<<<< HEAD
+
 /*-----------------------------------------------ADD USERS---------------------------------------------*/
-=======
-/*----------------------------ADD USERS----------------------*/
->>>>>>> 65cfe5abccb4b2323721699ccf976e10b5c2384d
+
 
 @RequestMapping(value = "/addUser", method = RequestMethod.POST)
 public ResponseEntity<String> addUser(@RequestBody String body) {
@@ -435,11 +403,8 @@ public ResponseEntity<String> addUser(@RequestBody String body) {
 }
 
 
-<<<<<<< HEAD
+
 /*-----------------------------------------------DELETE JOB----------------------------------------------*/
-=======
-/*----------------------------DELETE JOB----------------------*/
->>>>>>> 65cfe5abccb4b2323721699ccf976e10b5c2384d
 
 @RequestMapping(value = "/deleteJob", method = RequestMethod.POST)
 public ResponseEntity<String> deleteJob(@RequestBody String body) {
@@ -466,11 +431,8 @@ public ResponseEntity<String> deleteJob(@RequestBody String body) {
 	return new ResponseEntity<String>("{\"msg\": \"Success\"}", HttpStatus.OK);
 }
 
-<<<<<<< HEAD
+
 /*-----------------------------------------------FETCH ALL JOBS----------------------------------------------*/
-=======
-/*----------------------------FETCH ALL JOBS----------------------*/
->>>>>>> 65cfe5abccb4b2323721699ccf976e10b5c2384d
 
 @RequestMapping(value = "/fetchAllJobs", method = RequestMethod.GET)
 public ResponseEntity<String> fetchAllJobs() 
@@ -490,10 +452,6 @@ public ResponseEntity<String> fetchAllJobs()
 	}
 
 }
-
-<<<<<<< HEAD
-
-
 
 /*---------------------------------------------FETCH ALL FRIENDS---------------------------------------------*/
 
@@ -619,8 +577,7 @@ public ResponseEntity<String> unFriend( @RequestBody String body  )
 }
 
 
-=======
->>>>>>> 65cfe5abccb4b2323721699ccf976e10b5c2384d
+
 /*----------------------------ADD JOB----------------------*/
 
 @RequestMapping(value = "/addJob", method = RequestMethod.POST)

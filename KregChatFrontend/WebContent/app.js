@@ -32,7 +32,6 @@ KregChatFrontend.config(function($routeProvider) {
 	}).when('/chats', {
 		templateUrl : 'chats.html',
 		controller : 'ChatController'
-<<<<<<< HEAD
 	})
 	.when('/friends', {
 		templateUrl : 'friends.html',
@@ -42,75 +41,9 @@ KregChatFrontend.config(function($routeProvider) {
 	// templateUrl : 'home.html',
 	// controller : 'HomeController'
 	// })
-=======
-			})
-//	.otherwise('/home', {
-//		templateUrl : 'home.html',
-//		controller : 'HomeController'
-//	})
->>>>>>> 65cfe5abccb4b2323721699ccf976e10b5c2384d
+
 });
 
-KregChatFrontend.service('dataService', function() {
-
-	// private variable
-	var _dataObj = {};
-
-	// public API
-	this.dataObj = _dataObj;
-});
-
-<<<<<<< HEAD
-KregChatFrontend.controller("navController", [ '$scope',
-// '$location',
-// '$window',
-'$http',
-// 'dataService',
-// '$rootScope',
-function($scope,
-// $location, $window,
-$http
-// ,dataService, $rootScope
-) {
-
-	console.log('navController');
-
-	// console.log($window.sessionStorage
-	// .getItem("currentUser"));
-	//
-	// $rootScope.LoginStatus = false;
-	//
-	// if ($window.sessionStorage.getItem("currentUser") != null
-	// && $window.sessionStorage
-	// .getItem("currentUser") != undefined) {
-	// $rootScope.LoginEmail = JSON
-	// .parse($window.sessionStorage
-	// .getItem("currentUser")).email;
-	// $rootScope.LoginRole = JSON
-	// .parse($window.sessionStorage
-	// .getItem("currentUser")).role;
-
-	// dataService.dataObj.LoginStatus = true;
-	//
-	// $rootScope.LoginStatus = true;
-	//
-	// } else {
-	// window.setTimeout(function() {
-	// $("#loginModal").modal('show');
-	// }, 1000);
-	// $rootScope.LoginStatus = false;
-	// }
-
-	$scope.logout = function() {
-		$window.sessionStorage.clear();
-		$rootScope.LoginStatus = false;
-
-		$location.path('/home');
-
-	}
-
-} ]);
-=======
 KregChatFrontend
 		.controller(
 				"navController",
@@ -165,4 +98,3 @@ KregChatFrontend
 
 						} 
 							]);
->>>>>>> 65cfe5abccb4b2323721699ccf976e10b5c2384d
