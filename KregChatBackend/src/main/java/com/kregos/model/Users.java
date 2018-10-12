@@ -20,7 +20,6 @@ public class Users
 	
 	private List<String> friends = new ArrayList<String>();
 	private List<String> requestsIn = new ArrayList<String>();
-	private List<String> requests = new ArrayList<String>();
 	private List<String> requestsOut = new ArrayList<String>();
 	
 	
@@ -90,12 +89,7 @@ public class Users
 	public void setRequestsIn(List<String> requestsIn) {
 		this.requestsIn = requestsIn;
 	}
-	public List<String> getRequests() {
-		return requests;
-	}
-	public void setRequests(List<String> requests) {
-		this.requests = requests;
-	}
+	
 	public List<String> getRequestsOut() {
 		return requestsOut;
 	}
@@ -107,6 +101,13 @@ public class Users
 	{
 		super();
 		
+	}
+	@Override
+	public String toString() {
+		return "Users [id=" + id + ", username=" + username + ", password=" + password + ", email=" + email + ", phone="
+				+ phone + ", gender=" + gender + ", enabled=" + enabled + ", role=" + role + ", profilePicUrl="
+				+ profilePicUrl + ", friends=" + friends + ", requestsIn=" + requestsIn + ", requestsOut=" + requestsOut
+				+ "]";
 	}
 
 }

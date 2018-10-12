@@ -47,7 +47,16 @@ public class UsersDAOImpl implements UsersDAO {
 
 	public Users find(Users users) {
 		Query query = new Query(Criteria.where("_id").is(users.getId()));
-		return mongoTemplate.findOne(query, Users.class, COLLECTION);
+		
+		Users u = mongoTemplate.findOne(query, Users.class, COLLECTION);
+		
+		if( u == null ) {
+			query = new Query(Criteria.where("email").is(users.getEmail()));
+			
+		    return mongoTemplate.findOne(query, Users.class, COLLECTION);
+		}
+				
+		return u;
 	}
 
 	public List<Users> findAll() {
