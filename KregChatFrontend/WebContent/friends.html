@@ -161,9 +161,9 @@ body {
 							<br><br>
 							<button class="btn btn-success" ng-show="x.friends.indexOf(Email.value) == -1 && x.requestsOut.indexOf(Email.value) == -1 && x.requestsIn.indexOf(Email.value) == -1" ng-click="AddFriend(x.email)">AddFriend</button>
 							<br><br>
-							<button class="btn btn-primary" ng-show="x.friends.indexOf(Email.value) == -1 && x.requestsOut.indexOf(Email.value) == -1 && x.requestsIn.indexOf(Email.value) > -1" ng-click="AcceptFriend(x.email)">Accept Friend</button>
+							<button class="btn btn-primary" ng-show="x.friends.indexOf(Email.value) == -1 && x.requestsOut.indexOf(Email.value) != -1 && x.requestsIn.indexOf(Email.value) == -1" ng-click="AcceptFriend(x.email)">Accept Friend</button>
 							<br><br>
-							<button class="btn btn-danger" ng-show="x.friends.indexOf(Email.value) == -1 && x.requestsOut.indexOf(Email.value) != -1 && x.requestsIn.indexOf(Email.value) == -1" ng-click="UndoFriend(x.email)">Undo Request</button>
+							<button class="btn btn-danger" ng-show="x.friends.indexOf(Email.value) == -1 && x.requestsOut.indexOf(Email.value) == -1 && x.requestsIn.indexOf(Email.value) != -1" ng-click="UndoFriend(x.email)">Undo Request</button>
 						</div>
 					</div>
 				</div>

@@ -254,8 +254,8 @@ KregChatFrontend.controller('FriendsController', [
 
 			$scope.AcceptFriend = function(arg2) {
 				var json = {
-					'alphaEmail' : $scope.Email.value,
-					'omegaEmail' : arg2
+					'alphaEmail' : arg2,
+					'omegaEmail' : $scope.Email.value
 				};
 
 				console.log(json);

@@ -606,10 +606,10 @@ public class KregRestController {
 			udao.update(u);
 			
 			u = new Users();
-			u.setEmail(joObject.get("alphaEmail").toString());
+			u.setEmail(joObject.get("omegaEmail").toString());
 			u = udao.find(u);
 			List<String> r = u.getRequestsIn();
-			r.remove(joObject.get("omegaEmail").toString());
+			r.remove(joObject.get("alphaEmail").toString());
 			u.setRequestsIn(r);
 			udao.update(u);
 			
@@ -772,6 +772,55 @@ public class KregRestController {
 		}
 
 		return new ResponseEntity<String>("{\"msg\": \"Success\"}", HttpStatus.OK);
+	}
+	
+	
+	/*---------------------LOGINER---------------------------*/
+	
+	@RequestMapping(value="/loginner",method=RequestMethod.POST)
+	public ResponseEntity<String> loginner( @RequestBody String body  )
+	{
+		System.out.println(body);
+		
+		try
+		{
+			JSONParser jp = new JSONParser();
+			
+			JSONObject joObject = (JSONObject)jp.parse(body);
+		
+			System.out.println(joObject);
+		
+			Users u = new Users();
+			
+			u.setEmail(joObject.get("Email").toString());
+			
+			u = udao.find(u);
+			
+			if( u != null && u.getPassword().equals( joObject.get("Password").toString() ) )
+			{
+			
+				ObjectMapper mapper = new ObjectMapper();
+				
+				try
+				{
+					return new ResponseEntity<String>(mapper.writeValueAsString(u), HttpStatus.OK);
+				}
+				catch( Exception e )
+				{
+					e.printStackTrace();
+					return new ResponseEntity<String>("{\"msg\": \"Failure\"}", HttpStatus.OK);
+					
+				}
+				
+			}
+		}
+		catch( Exception e )
+		{
+			e.printStackTrace();
+			return new ResponseEntity<String>("{\"msg\": \"Failure\"}", HttpStatus.OK);
+		}
+		
+		return new ResponseEntity<String>("{\"msg\": \"Failure\"}", HttpStatus.OK);
 	}
 
 }

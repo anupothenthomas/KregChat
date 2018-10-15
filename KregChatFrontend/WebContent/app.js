@@ -37,61 +37,60 @@ KregChatFrontend.config(function($routeProvider) {
 		templateUrl : 'friends.html',
 		controller : 'FriendsController'
 	})
-	// .otherwise('/home', {
-	// templateUrl : 'home.html',
-	// controller : 'HomeController'
-	// })
+
 
 });
 
+
+KregChatFrontend.service('dataService', function() {
+
+	  // private variable
+	  var _dataObj = {};
+
+	  // public API
+	  this.dataObj = _dataObj;
+	});
+
 KregChatFrontend
 		.controller(
-				"navController",
+				"NavigationController",
 				[
-						'$scope',
-//						'$location',
-//						'$window',
+						'$scope',					
 						'$http',
-//						'dataService',
-//						'$rootScope',
+						'$window',
+						'$location',
+						'dataService',
+						'$rootScope',
+
 						function($scope, 
-//								$location, $window, 
-								$http
-//							,dataService, $rootScope
+								$http,  $window, $location, dataService, $rootScope
 							) {
 
-							console.log('navController');
+							console.log('Navigation Controller');
 
-//							console.log($window.sessionStorage
-//									.getItem("currentUser"));
-//
-//							$rootScope.LoginStatus = false;
-//
-//							if ($window.sessionStorage.getItem("currentUser") != null
-//									&& $window.sessionStorage
-//											.getItem("currentUser") != undefined) {
-//								$rootScope.LoginEmail = JSON
-//										.parse($window.sessionStorage
-//												.getItem("currentUser")).email;
-//								$rootScope.LoginRole = JSON
-//										.parse($window.sessionStorage
-//												.getItem("currentUser")).role;
+							console.log( $window.sessionStorage.getItem("currentUser") );
 
-								// dataService.dataObj.LoginStatus = true;
-//
-//								$rootScope.LoginStatus = true;
-//
-//							} else {
-//								window.setTimeout(function() {
-//									$("#loginModal").modal('show');
-//								}, 1000);
-//								$rootScope.LoginStatus = false;
-//							}
 
+							if( $window.sessionStorage.getItem("currentUser") != null && $window.sessionStorage.getItem("currentUser") != undefined )
+							{
+								$rootScope.LogonEmail = JSON.parse( $window.sessionStorage.getItem("currentUser") ).email;
+								$rootScope.LogonRole = JSON.parse( $window.sessionStorage.getItem("currentUser") ).role;
+																
+								$rootScope.LoginStats = true;
+								
+							}
+							else
+							{
+								window.setTimeout(function(){
+									$("#logonMod").modal('show');
+								},1000);
+								$rootScope.LoginStats = false;
+							}
+							
+							
 							$scope.logout = function() {
 								$window.sessionStorage.clear();
-								$rootScope.LoginStatus = false;
-
+								$rootScope.LoginStats = false;
 								$location.path('/home');
 
 							}

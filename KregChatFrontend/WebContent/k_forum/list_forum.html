@@ -3,37 +3,168 @@
 <head>
 
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>View Forum</title>
+<style>
+
+body{ 
+    background-color: #e9eef1;
+    margin: 0px;
+    padding: 0px;
+}
+
+@media (min-width: 1200px){
+.container {
+    width: 1170px;
+}
+
+}
+
+* {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.row {
+    margin-right: -15px;
+    margin-left: -15px;
+}
+
+.col-xs-12 {
+    width: 100%;
+}
+
+.blog-grids {
+    overflow: hidden;
+    margin: 0 -15px;
+}
+
+.blog-grids .grid {
+    background-color: #fff;
+    width: calc(90% - 90px);
+    float: left;
+    padding: 15px;
+    margin: 20px 15px 15px;
+    border-radius: 10px;
+    -webkit-box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+}
+
+.entry-media img {
+    border-radius: 10px;
+    width: 100%;
+    max-height: 188px;
+}
+
+.entry-body {
+    padding: 30px 20px;
+}
+
+.entry-body .cat {
+    font-family: "Ubuntu", sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    color: #6220d9;
+    text-transform: uppercase;
+}
+
+.entry-body h3 {
+    font-size: 21px;
+    font-weight: 600;
+    line-height: 1.30em;
+    margin: 3px 0 0.73em;
+}
+
+.entry-body h3 a {
+    color: #41516a;
+}
+
+.entry-body h3 a:hover {
+    color: #6220d9;
+    text-decoration: none;
+}
+
+.entry-body p {
+    margin-bottom: 2em;
+    color: #90949a;
+    line-height: 1.8em;
+}
+
+.read-more-date {
+    position: relative;
+}
+
+.read-more-date a {
+    font-family: "Oswald", sans-serif;
+    font-size: 16px;
+    font-size: 1.06667rem;
+    font-weight: 600;
+    color: #41516a;
+    text-transform: uppercase;
+}
+
+.read-more-date .date {
+    position: absolute;
+    right: 0;
+    color: #90949a;
+}
+</style>
+
+<title>KregChat : Forum List</title>
 
 </head>
 
 <h1 class="text text-primary" ng-if="AllForums.length == 0">No
 	Forums Yet</h1>
 
-<div class="container" ng-if="AllForums.length != 0" style="margin-left:70px;">
-	<div class="col-md-4 well" ng-repeat="x in AllForums">
+<!-- <div class="container" ng-if="AllForums.length != 0" style="margin-left:70px;"> -->
+<!-- 	<div class="col-md-4 well" ng-repeat="x in AllForums"> -->
 
-		<h4>{{x.title}}</h4>
-		<hr>
-		{{x.description}}
-		<hr>
+<!-- 		<h4>{{x.title}}</h4> -->
+<!-- 		<hr> -->
+<!-- 		{{x.description}} -->
+<!-- 		<hr> -->
 
-		<hr>
-		{{x.category}}
-		<hr>
+<!-- 		<hr> -->
+<!-- 		{{x.category}} -->
+<!-- 		<hr> -->
 
-		<a class="btn btn-primary pull-right marginBottom10"
-			style="bottom: 20px; position: relative; margin-right: 20px;"
-			data-toggle="modal" data-target="#editForumModal"
-			ng-click="EditForum(x.id)">Edit Forum</a>
+<!-- 		<a class="btn btn-primary pull-right marginBottom10" -->
+<!-- 			style="bottom: 20px; position: relative; margin-right: 20px;" -->
+<!-- 			data-toggle="modal" data-target="#editForumModal" -->
+<!-- 			ng-click="EditForum(x.id)">Edit Forum</a> -->
 
-		<button class="btn btn-danger" ng-click="DeleteForum(x.id)">Delete</button>
-	</div>
-</div>
+<!-- 		<button class="btn btn-danger" ng-click="DeleteForum(x.id)">Delete</button> -->
+<!-- 	</div> -->
+<!-- </div> -->
 
+
+
+
+<div class="container" ng-if="AllForums.length != 0">
+	<div class="row">
+		<div class="col col-md-4" ng-repeat="x in AllForums">
+                        <div class="blog-grids" >
+                            <div class="grid">
+                                <div class="entry-media">
+                                    <img src="http://www.csshint.com/wp-content/uploads/2017/09/beautiful-buttons-effect.jpg" alt="">
+                                </div>
+                                <div class="entry-body">
+                                    <span class="cat">{{x.title}}</span>
+                                    <h3><a href="#">{{x.category}}</a></h3>
+                                    <p>{{x.description}}</p>
+                                    <div class="read-more-date">
+                                        <a href="#">Read More..</a>
+                                    </div>
+                                    
+                                     <div class="date" style="color:#9e9c9c;">{{x.date}}</div>
+                                     <br>
+                                    <button class="btn btn-danger" ng-click="DeleteForum(x.id)">Delete</button>
+                                    <button class="btn btn-primary" ng-click="EditForum(x.id)" data-toggle="modal" data-target="#editForumModal">Edit</button>
+                                </div>
+                            </div></div></div></div></div>
 
 <!-- ------------------------------------------------------------------------ -->
-<!-- -------------------------UPDATE/EDIT BLOG MODAL------------------------- -->
+<!-- -------------------------UPDATE/EDIT FORUM MODAL------------------------- -->
 <!-- ------------------------------------------------------------------------ -->
 
 

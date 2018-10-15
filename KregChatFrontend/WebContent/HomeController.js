@@ -7,9 +7,32 @@ KregChatFrontend
 				[
 						'$scope',
 						'$http',
+						'$window',
+						'$location',
+						'$rootScope',
+						'dataService',
 
-						function($scope, $http ) {		
+						function($scope, $http, $window, $location, dataService, $rootScope) {		
 							console.log('HomeController');
+							
+							
+							
+							if( $window.sessionStorage.getItem("currentUser") != null && $window.sessionStorage.getItem("currentUser") != undefined )
+							{
+								$rootScope.LogonEmail = JSON.parse( $window.sessionStorage.getItem("currentUser") ).email;
+								$rootScope.LogonRole = JSON.parse( $window.sessionStorage.getItem("currentUser") ).role;
+								
+								console.log( $rootScope.LogonRole );
+								
+								$rootScope.LoginStats = true;
+								$location.path("/blog");
+							}
+							else
+							{
+								window.setTimeout(function(){
+									$("#logonMod").modal('show');
+								},1000);
+							}
 							
 							$scope.home = {
 									'Username' : "",
@@ -48,6 +71,78 @@ KregChatFrontend
 										});
 
 							}
+							
+							$scope.LoginStats = false;
+							
+							$scope.Loggon = function()
+							{
+								var json = 
+										{
+										'Email': $scope.LogonEmail.value,
+										'Password': $scope.LogonPassword.value
+										};
+								
+								console.log(json);
+								
+								
+								$http({method:'post',url:BASE_URL + '/loginner', data: json, headers: {'Content-Type': 'application/json'}}).then(function(data){
+									console.log( data )
+									
+									switch( data.data.msg )
+									{
+									default:
+										
+										var ember = data.data;
+									
+										delete ember.id;
+										delete ember.password;
+										
+										$window.sessionStorage.setItem("currentUser",JSON.stringify(ember));
+										
+										$("#logonMod").modal('hide');
+									
+										
+										$rootScope.LogonEmail = JSON.parse( $window.sessionStorage.getItem("currentUser") ).email;
+										
+										$rootScope.LogonRole = JSON.parse( $window.sessionStorage.getItem("currentUser") ).role;
+										
+										window.setTimeout(function(){
+//											$scope.$apply( $location.path('/blog') );
+											$scope.$apply( $scope.LoginStats = dataService.dataObj.LoginStats = true );
+											$scope.$apply( $rootScope.LoginStats = true );
+											
+										},500);
+										swal({
+											title: "User Login Success",   
+										      text: "Please enter correct credentials!",   
+										      type: "Success" });
+										
+										break;
+										
+									case 'Failure':
+										swal("User Login Failure", "Please enter correct credentials!", "error")
+										break;
+									}
+									
+								},function(data){
+									console.log( data )
+									
+									switch( data.data.msg )
+									{
+									default:
+										
+										$("#logonMod").modal('hide');
+										$rootScope.LogonEmail = JSON.parse( $window.sessionStorage.getItem("currentUser") );
+										$location.path('/blog');
+										$scope.$apply( $scope.LoginStats = dataService.dataObj.LoginStats = true );
+										break;
+										
+									case 'Failure':
+										swal("User Login Failure", "Please enter correct credentials!", "error")
+										break;
+									}
+								});
+							}
 						
 
 							$scope.Username = {
@@ -60,6 +155,30 @@ KregChatFrontend
 									$scope.Username.error = reg
 											.test($scope.Username.value);
 								}
+							}
+							
+							$scope.LogonEmail = 
+							{ 
+									value: '',
+									error : true,
+									touched : false,
+									validate: function(){
+										this.touched = true;
+										var reg = /^$/;
+										this.error = reg.test( this.value );
+									}
+							}
+							
+							$scope.LogonPassword = 
+							{ 
+									value: '',
+									error : true,
+									touched : false,
+									validate: function(){
+										this.touched = true;
+										var reg = /^$/;
+										this.error = reg.test( this.value );
+									}
 							}
 
 							$scope.Email = {

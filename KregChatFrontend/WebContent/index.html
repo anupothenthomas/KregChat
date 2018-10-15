@@ -77,11 +77,11 @@
 <body ng-app="KregChatFrontend">
 
 	<nav class="navbar"
-		style="background-color: #000000; margin-top: 0px; font-family: 'Oswald', sans-serif;">
+		style="background-color: #000000; margin-top: 0px; font-family: 'Oswald', sans-serif;" ng-controller="NavigationController">
 		<div class="container-fluid">
 			<div class="navbar-header">
 
-				<ul class="nav navbar-nav navbar-left" ng-show="!$root.LoginStatus">
+				<ul class="nav navbar-nav navbar-left" ng-show="!$root.LoginStats">
 
 					<a href="#!/home" style="color: white;"><img
 						src="resources/images/kregchatlogo.jpg"
@@ -90,7 +90,7 @@
 			</div>
 
 
-			<ul class="nav navbar-nav" ng-show="!$root.LoginStatus">
+			<ul class="nav navbar-nav" ng-show="$root.LoginStats">
 
 							
 					<li><a href="#!/home"
@@ -129,11 +129,11 @@
 				<li>
 					<div class="container-fluid">
 
-						<div class="row" ng-show="!$root.LoginStatus">
+						<div class="row" ng-show="$root.LoginStats">
 
 							<div class="col-lg-4">
 								<br> <label style="color: white;">WELCOME
-									{{$root.LoginEmail}}</label>
+									{{$root.LogonEmail}}</label>
 							</div>
 
 							<div class="col-lg-4">

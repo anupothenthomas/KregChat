@@ -13,7 +13,7 @@ body, html {
 	height: 100%;
 	background-repeat: no-repeat;
 	background: url(https://i.ytimg.com/vi/4kfXjatgeEU/maxresdefault.jpg);
-	font-family: 'Oxygen', sans-serif;
+	font-family: 'Ubuntu', sans-serif;
 	background-size: cover;
 }
 
@@ -23,7 +23,7 @@ body, html {
 
 h1.title {
 	font-size: 50px;
-	font-family: 'Passion One', cursive;
+	font-family: 'Oswald', cursive;
 	font-weight: 400;
 }
 
@@ -47,13 +47,12 @@ input, input::-webkit-input-placeholder {
 
 .main-login {
 	background-color: #fff;
-	/* shadows and rounded borders */
-	-moz-border-radius: 2px;
-	-webkit-border-radius: 2px;
-	border-radius: 2px;
-	-moz-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
-	-webkit-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
-	box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	border-radius: 4px;
+	-moz-box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.3);
+	-webkit-box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.3);
+	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.3);
 }
 
 .form-control {
@@ -77,19 +76,19 @@ input, input::-webkit-input-placeholder {
 	-moz-border-radius: 3px 3px;
 	-webkit-border-radius: 3px 3px;
 	border-radius: 3px 3px;
-	-moz-box-shadow: 0 1px #fff inset, 0 1px #ddd;
-	-webkit-box-shadow: 0 1px #fff inset, 0 1px #ddd;
-	box-shadow: 0 1px #fff inset, 0 1px #ddd;
-	background: #f5f5f5;
-	background: -moz-linear-gradient(top, #f5f5f5 0%, #eeeeee 100%);
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #f5f5f5),
-		color-stop(100%, #eeeeee));
-	background: -webkit-linear-gradient(top, #f5f5f5 0%, #eeeeee 100%);
-	background: -o-linear-gradient(top, #f5f5f5 0%, #eeeeee 100%);
-	background: -ms-linear-gradient(top, #f5f5f5 0%, #eeeeee 100%);
-	background: linear-gradient(top, #f5f5f5 0%, #eeeeee 100%);
-	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f5f5f5',
-		endColorstr='#eeeeee', GradientType=0);
+/* 	-moz-box-shadow: 0 1px #fff inset, 0 1px #ddd; */
+/* 	-webkit-box-shadow: 0 1px #fff inset, 0 1px #ddd; */
+/* 	box-shadow: 0 1px #fff inset, 0 1px #ddd; */
+/* 	background: #f5f5f5; */
+/* 	background: -moz-linear-gradient(top, #f5f5f5 0%, #eeeeee 100%); */
+/* 	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #f5f5f5), */
+/* 		color-stop(100%, #eeeeee)); */
+/* 	background: -webkit-linear-gradient(top, #f5f5f5 0%, #eeeeee 100%); */
+/* 	background: -o-linear-gradient(top, #f5f5f5 0%, #eeeeee 100%); */
+/* 	background: -ms-linear-gradient(top, #f5f5f5 0%, #eeeeee 100%); */
+/* 	background: linear-gradient(top, #f5f5f5 0%, #eeeeee 100%); */
+/* 	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f5f5f5', */
+/* 		endColorstr='#eeeeee', GradientType=0); */
 }
 
 .main-center {
@@ -136,7 +135,7 @@ span.input-group-addon i {
 	<!-- ---------------------------------------------------------------------------------------------------- -->
 
 
-	<div id="loginModal" class="modal fade" role="dialog">
+	<div id="logonMod" class="modal fade " role="dialog">
 		<div class="modal-dialog modal-lg">
 
 			<!-- Modal content -->
@@ -145,26 +144,26 @@ span.input-group-addon i {
 				<div class="modal-header" style="border-bottom: none;">
 					<button type="button" class="close" data-dismiss="modal">&times;</button>
 					<h4 class="modal-title"
-						style="font-family: 'Ubuntu', cursive; font-size: 32px; color: #FFFFFF;">Login</h4>
+						style="font-family: 'Ubuntu', cursive; font-size: 25px; color: #FFFFFF;"><b>Login</b></h4>
 				</div>
 				<div class="modal-body">
 
-					<div style="background-color:; padding: 40px;">
+					<div style="background-color:; padding: 30px;">
 
 						<input type="text" class="form-control" placeholder="Enter Email"
-							ng-model="LoginEmail.value" ng-change="LoginEmail.validate()">
+							ng-model="LogonEmail.value" ng-change="LogonEmail.validate()">
 
-						<div ng-if="LoginEmail.touched && LoginEmail.error"
+						<div ng-if="LogonEmail.touched && LogonEmail.error"
 							class="text text-default"
 							style="color: #ba0d0d; font-family: Ubuntu;">
 							<h1>Email cannot be empty</h1>
 						</div>
 
 						<br> <input type="password" class="form-control"
-							placeholder="Enter Password" ng-model="LoginPassword.value"
-							ng-change="LoginPassword.validate()">
+							placeholder="Enter Password" ng-model="LogonPassword.value"
+							ng-change="LogonPassword.validate()">
 
-						<div ng-if="LoginPassword.touched && LoginPassword.error"
+						<div ng-if="LogonPassword.touched && LogonPassword.error"
 							class="text text-default"
 							style="color: #ba0d0d; font-family: Ubuntu;">
 							<h1>Password cannot be empty</h1>
@@ -174,8 +173,8 @@ span.input-group-addon i {
 
 						<button class="btn btn-success"
 							style="margin-left: 25%; margin-right: 25%; width: 50%;"
-							ng-disabled='!( !LoginPassword.error && LoginPassword.touched && !LoginEmail.error && LoginEmail.touched )'
-							ng-click="PerformLogin()">Login</button>
+							ng-disabled='!( !LogonPassword.error && LogonPassword.touched && !LogonEmail.error && LogonEmail.touched )'
+							ng-click="Loggon()">Login</button>
 					</div>
 
 
@@ -296,7 +295,7 @@ span.input-group-addon i {
 						</div>
 					<br>
 				
-				<button class="btn btn-success btn-lg" style="margin-left: 25%; margin-right: 25%; width: 50%; font-family:Ubuntu;" data-toggle="modal" data-target="#loginModal">Login</button>
+				<button class="btn btn-success btn-lg" style="margin-left: 25%; margin-right: 25%; width: 50%; font-family:Ubuntu;" data-toggle="modal" data-target="#logonMod">Login</button>
 				
 				<br>
 				</div>
