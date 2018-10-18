@@ -121,16 +121,16 @@ body {
 		<td>
 				<h5 class=" text-center">Type in your email id to find out friends for you</h5>
 		
-			&nbsp;&nbsp;
-			<input id="Email" type="text" class="Email form-control write_msg"
-			ng-change="Email.validate()" ng-model="Email.value"
-			placeholder="Type your email" />
-			<div ng-if="Email.touched && Email.error" class="text text-default">
-				<h1>Email must be valid</h1>
-			</div><br> 	
-			<button id="emailver"
-				ng-disabled='!(!Email.error && Email.touched)'
-				ng-click="Connecteros()" class="btn btn-success">Start</button>
+<!-- 			&nbsp;&nbsp; -->
+<!-- 			<input id="Email" type="text" class="Email form-control write_msg" -->
+<!-- 			ng-change="Email.validate()" ng-model="Email.value" -->
+<!-- 			placeholder="Type your email" /> -->
+<!-- 			<div ng-if="Email.touched && Email.error" class="text text-default"> -->
+<!-- 				<h1>Email must be valid</h1> -->
+<!-- 			</div><br> 	 -->
+<!-- 			<button id="emailver" -->
+<!-- 				ng-disabled='!(!Email.error && Email.touched)' -->
+<!-- 				ng-click="Connecteros()" class="btn btn-success">Start</button> -->
 		</td>
 
 	<h1 class="text text-primary" ng-if="AllFriends.length == 0">No Friends Yet</h1>
@@ -138,7 +138,7 @@ body {
 
 	<div class="container" ng-if="AllFriends.length != 0">
 		<div class="row">
-			<div class="col-md-4" ng-repeat="x in AllFriends" >
+			<div class="col-md-4" ng-if="x.email != $root.LogonEmail" ng-repeat="x in AllFriends" >
 				<div class="blog-grids">
 					<div class="grid">
 						<div class="entry-media">
@@ -150,6 +150,8 @@ body {
 							<h3 style="font-size: 10px;">
 								<a href="#">{{x.email}}</a>
 							</h3>
+							<a href="#!/blog/{{x.email}}" class="btn btn-primary price">Blogs</a>
+	                     	<a href="#!/list_forum/{{x.email}}" class="btn btn-success price">Forums</a>
 							<p>{{x.gender}}</p>
 							<div class="read-more-date">
 								<a href="#">Know More..</a>
@@ -157,13 +159,13 @@ body {
 
 							<div class="date" style="color: #9e9c9c;">{{x.date}}</div>
 							<br>
-							<button class="btn btn-danger" ng-show="x.friends.indexOf(Email.value) != -1 && x.requestsOut.indexOf(Email.value) == -1 && x.requestsIn.indexOf(Email.value) == -1" ng-click="UnFriend(x.email)">Unfriend</button>
+							<button class="btn btn-danger" ng-show="x.friends.indexOf(Email.value) != -1 && x.requestsOut.indexOf(Email.value) == -1 && x.requestsIn.indexOf(Email.value) == -1" ng-click="UnFriend($root.LogonEmail,x.email)">Unfriend</button>
 							<br><br>
-							<button class="btn btn-success" ng-show="x.friends.indexOf(Email.value) == -1 && x.requestsOut.indexOf(Email.value) == -1 && x.requestsIn.indexOf(Email.value) == -1" ng-click="AddFriend(x.email)">AddFriend</button>
+							<button class="btn btn-success" ng-show="x.friends.indexOf(Email.value) == -1 && x.requestsOut.indexOf(Email.value) == -1 && x.requestsIn.indexOf(Email.value) == -1"  ng-click="AddFriend($root.LogonEmail,x.email)">AddFriend</button>
 							<br><br>
-							<button class="btn btn-primary" ng-show="x.friends.indexOf(Email.value) == -1 && x.requestsOut.indexOf(Email.value) != -1 && x.requestsIn.indexOf(Email.value) == -1" ng-click="AcceptFriend(x.email)">Accept Friend</button>
+							<button class="btn btn-primary" ng-show="x.friends.indexOf(Email.value) == -1 && x.requestsOut.indexOf(Email.value) != -1 && x.requestsIn.indexOf(Email.value) == -1" ng-click="AcceptFriend($root.LogonEmail,x.email)">Accept Friend</button>
 							<br><br>
-							<button class="btn btn-danger" ng-show="x.friends.indexOf(Email.value) == -1 && x.requestsOut.indexOf(Email.value) == -1 && x.requestsIn.indexOf(Email.value) != -1" ng-click="UndoFriend(x.email)">Undo Request</button>
+							<button class="btn btn-danger" ng-show="x.friends.indexOf(Email.value) == -1 && x.requestsOut.indexOf(Email.value) == -1 && x.requestsIn.indexOf(Email.value) != -1" ng-click="UndoFriend($root.LogonEmail,x.email)">Undo Request</button>
 						</div>
 					</div>
 				</div>

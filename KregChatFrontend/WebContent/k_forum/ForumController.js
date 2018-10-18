@@ -3,16 +3,66 @@
  */
 
 KregChatFrontend.controller('ForumController', [
-		'$scope',
-		'$http',
-		function($scope, $http) {
+	'$scope',
+	'$http',
+	'$routeParams',
+	'$location',
+	'$window',
+	'dataService',
+	'$rootScope',
+		function($scope, $http, $routeParams, dataService, $window, $location, $rootScope) {
 			
+		console.log( $routeParams.otheremail )
+		
+		$scope.otheremail = $routeParams.otheremail;
+
+		$scope.$routeParams = $routeParams;
+		
+		if( $window.sessionStorage.getItem("currentUser") == null || $window.sessionStorage.getItem("currentUser") == undefined )
+		{
 			
+			$('.modal').modal('hide');
+			$('.modal-backdrop').remove();
+			$location.path("/");
+		}
+		
+		$scope.filterVal = '';
+		
+		$scope.setFilterVal = function(arg)
+		{
+			console.log(arg);
+			$scope.filterVal = arg;
+		}
+
+		$scope.CheckForums = function( arg )
+		{
+			for( var i = 0 ; i < $scope.AllForums.length ; i++ )
+			{
+				if( $scope.AllForums[i].ownerId == arg )
+					return true;
+			}
+			
+			return false;
+		}
+		
+		$scope.CheckApprovedForums = function( arg )
+		{
+			console.log(arg);
+			
+			for( var i = 0 ; i < $scope.AllForums.length ; i++ )
+			{
+				if( $scope.AllForums[i].ownerId == arg && $scope.AllForums[i].approved)
+					return true;
+			}
+			
+			return false;
+		}
+		
 			
 			$scope.forum = {
 				"title" : "",
 				"description" : "",
-				"email" : null,
+				"ownerId" : $rootScope.LogonEmail,
 				"category" : null
 			}
 
@@ -101,13 +151,17 @@ KregChatFrontend.controller('ForumController', [
 					this.error = !reg.test(this.value);
 				}
 			}
-			/*---------------------------------------------------*/
+			/*----------------------ALL FORUMS-----------------------------*/
 
 			$scope.AllForums = [];
+			
+			
+			/*--------------ADD FORUM-------------*/
+
 
 			$scope.AddForum = function() {
 				var json = {
-					"email" : $rootScope.LoginEmail,
+					"Email" : $rootScope.LogonEmail,
 					"title" : $scope.title.value,
 					"description" : $scope.description.value,
 					"category" : null
@@ -221,6 +275,9 @@ KregChatFrontend.controller('ForumController', [
 			
 			$scope.Eid = -1;
 			
+			/*--------------EDIT FORUM-------------*/
+
+			
 			$scope.EditForum = function( arg ){
 				
 				
@@ -243,6 +300,9 @@ KregChatFrontend.controller('ForumController', [
 				}
 				
 			}
+			
+			/*--------------EDIT FORUM TO DB-------------*/
+
 			
 			$scope.EditForumToDB = function()
 			{
@@ -310,6 +370,143 @@ KregChatFrontend.controller('ForumController', [
 					}
 				});
 			}
+			
+			
+			/*--------------APPROVE FORUM-------------*/
+
+			
+			$scope.ApproveForum = function(arg)
+			{
+				var json = 
+						{
+						'id': arg
+						};
+				
+				console.log(json);
+				//alert(json);
+				
+				$http({method:'post',url:BASE_URL + '/approveForum', data: json, headers: {'Content-Type': 'application/json'}}).then(function(data){
+					console.log( data )
+					
+					switch( data.data.msg )
+					{
+					case 'Success':
+						
+						swal("Forum Approved", "Congratulations", "success")
+						
+						$http({method:'get',url:BASE_URL + '/fetchAllForums', headers: {'Content-Type': 'application/json'}})
+						.then(function(resp){
+							console.log( resp.data )
+						
+							$scope.AllForums = resp.data;
+						},function(resp){
+							
+							console.log( "fetchAllForums Error" )
+						});
+						
+						break;
+						
+					case 'Failure':
+						swal("Forum Approval Failure", "Something went wrong!", "error")
+						break;
+					}
+					
+				},function(data){
+					console.log( data )
+					
+					switch( data.data.msg )
+					{
+					case 'Success':
+						
+						swal("Forum Approved", "Congratulations", "success")
+						
+						$http({method:'get',url:BASE_URL + '/fetchAllForums', headers: {'Content-Type': 'application/json'}})
+						.then(function(resp){
+							console.log( resp.data )
+						
+							$scope.AllForums = resp.data;
+						},function(resp){
+							
+							console.log( "fetchAllForums Error" )
+						});
+						
+						break;
+						
+					case 'Failure':
+						swal("Forum Approval Failure", "Something went wrong!", "error")
+						break;
+					}
+				});
+			}
+			
+			
+			/*--------------REJECT FORUM-------------*/
+			
+			$scope.RejectForum = function(arg)
+			{
+				var json = 
+						{
+						'id': arg
+						};
+				
+				console.log(json);
+				//alert(json);
+				
+				$http({method:'post',url:BASE_URL + '/rejectForum', data: json, headers: {'Content-Type': 'application/json'}}).then(function(data){
+					console.log( data )
+					
+					switch( data.data.msg )
+					{
+					case 'Success':
+						
+						swal("Forum Rejected", "Congratulations", "success")
+						
+						$http({method:'get',url:BASE_URL + '/fetchAllForums', headers: {'Content-Type': 'application/json'}})
+						.then(function(resp){
+							console.log( resp.data )
+						
+							$scope.AllForums = resp.data;
+						},function(resp){
+							
+							console.log( "fetchAllForums Error" )
+						});
+						
+						break;
+						
+					case 'Failure':
+						swal("Forum Reject Failure", "Something went wrong!", "error")
+						break;
+					}
+					
+				},function(data){
+					console.log( data )
+					
+					switch( data.data.msg )
+					{
+					case 'Success':
+						
+						swal("Forum Rejected", "Congratulations", "success")
+						
+						$http({method:'get',url:BASE_URL + '/fetchAllForums', headers: {'Content-Type': 'application/json'}})
+						.then(function(resp){
+							console.log( resp.data )
+						
+							$scope.AllForums = resp.data;
+						},function(resp){
+							
+							console.log( "fetchAllForums Error" )
+						});
+						
+						break;
+						
+					case 'Failure':
+						swal("Forum Reject Failure", "Something went wrong!", "error")
+						break;
+					}
+				});
+			}
+			
+			
 
 			$scope.DeleteForum = function(arg) {
 

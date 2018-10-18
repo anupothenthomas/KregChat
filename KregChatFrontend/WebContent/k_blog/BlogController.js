@@ -9,15 +9,69 @@ KregChatFrontend
 				[
 						'$scope',
 						'$http',
-						function($scope, $http) {
+						'$routeParams',
+						'$location',
+						'$window',
+						'dataService',
+						'$rootScope',
+						
+						function($scope, $http, $routeParams, dataService, $window, $location, $rootScope  ) {
 
 							console.log('BlogController');
+							
+							console.log( $routeParams.otheremail )
+							
+							$scope.otheremail = $routeParams.otheremail;
+							
+							$scope.$routeParams = $routeParams;
+							
+							console.log( $window.sessionStorage.getItem("currentUser") );
+							
+							if( $window.sessionStorage.getItem("currentUser") == null || $window.sessionStorage.getItem("currentUser") == undefined )
+							{
+								
+								$('.modal').modal('hide');
+								$('.modal-backdrop').remove();
+								$location.path("/");
+							}
+							
+							$scope.filterVal = '';
+							
+							$scope.setFilterVal = function(arg)
+							{
+								console.log(arg);
+								$scope.filterVal = arg;
+							}
+							
+							$scope.CheckBlogs = function( arg )
+							{
+								for( var i = 0 ; i < $scope.AllBlogs.length ; i++ )
+								{
+									if( $scope.AllBlogs[i].ownerId == arg )
+										return true;
+								}
+								
+								return false;
+							}
+							
+							$scope.CheckApprovedBlogs = function( arg )
+							{
+								console.log(arg);
+								
+								for( var i = 0 ; i < $scope.AllBlogs.length ; i++ )
+								{
+									if( $scope.AllBlogs[i].ownerId == arg && $scope.AllBlogs[i].approved)
+										return true;
+								}
+								
+								return false;
+							}
 
 							$scope.blog = {
 								"title" : "",
 								"description" : "",
-								"date" : "",
-								"email" : null
+								"date" : new Date(),
+								"ownerId" : $rootScope.LogonEmail
 							}
 
 							/*----------------ADD BLOG SUBMIT-------------------*/
@@ -282,12 +336,147 @@ KregChatFrontend
 									this.error = !reg.test(this.value);
 								}
 							}
+							
+							
+							/*----------------APPROVE BLOG-------------------*/
+
+							
+							$scope.ApproveBlog = function(arg)
+							{
+								var json = 
+										{
+										'id': arg
+										};
+								
+								console.log(json);
+								//alert(json);
+								
+								$http({method:'post',url:BASE_URL + '/approveBlog', data: json, headers: {'Content-Type': 'application/json'}}).then(function(data){
+									console.log( data )
+									
+									switch( data.data.msg )
+									{
+									case 'Success':
+										
+										swal("Blog Approved", "Congratulations", "success")
+										
+										$http({method:'get',url:BASE_URL + '/fetchAllBlogs', headers: {'Content-Type': 'application/json'}})
+										.then(function(resp){
+											console.log( resp.data )
+										
+											$scope.AllBlogs = resp.data;
+										},function(resp){
+											
+											console.log( "fetchAllBlogs Error" )
+										});
+										
+										break;
+										
+									case 'Failure':
+										swal("Blog Approval Failure", "Something went wrong!", "error")
+										break;
+									}
+									
+								},function(data){
+									console.log( data )
+									
+									switch( data.data.msg )
+									{
+									case 'Success':
+										
+										swal("Blog Approved", "Congratulations", "success")
+										
+										$http({method:'get',url:BASE_URL + '/fetchAllBlogs', headers: {'Content-Type': 'application/json'}})
+										.then(function(resp){
+											console.log( resp.data )
+										
+											$scope.AllBlogs = resp.data;
+										},function(resp){
+											
+											console.log( "fetchAllBlogs Error" )
+										});
+										
+										break;
+										
+									case 'Failure':
+										swal("Blog Approval Failure", "Something went wrong!", "error")
+										break;
+									}
+								});
+							}
+							
+							/*----------------REJECT BLOG-------------------*/
+
+							
+							$scope.RejectBlog = function(arg)
+							{
+								var json = 
+										{
+										'id': arg
+										};
+								
+								console.log(json);
+								//alert(json);
+								
+								$http({method:'post',url:BASE_URL + '/rejectBlog', data: json, headers: {'Content-Type': 'application/json'}}).then(function(data){
+									console.log( data )
+									
+									switch( data.data.msg )
+									{
+									case 'Success':
+										
+										swal("Blog Rejected", "Congratulations", "success")
+										
+										$http({method:'get',url:BASE_URL + '/fetchAllBlogs', headers: {'Content-Type': 'application/json'}})
+										.then(function(resp){
+											console.log( resp.data )
+										
+											$scope.AllBlogs = resp.data;
+										},function(resp){
+											
+											console.log( "fetchAllBlogs Error" )
+										});
+										
+										break;
+										
+									case 'Failure':
+										swal("Blog Reject Failure", "Something went wrong!", "error")
+										break;
+									}
+									
+								},function(data){
+									console.log( data )
+									
+									switch( data.data.msg )
+									{
+									case 'Success':
+										
+										swal("Blog Rejected", "Congratulations", "success")
+										
+										$http({method:'get',url:BASE_URL + '/fetchAllBlogs', headers: {'Content-Type': 'application/json'}})
+										.then(function(resp){
+											console.log( resp.data )
+										
+											$scope.AllBlogs = resp.data;
+										},function(resp){
+											
+											console.log( "fetchAllBlogs Error" )
+										});
+										
+										break;
+										
+									case 'Failure':
+										swal("Blog Reject Failure", "Something went wrong!", "error")
+										break;
+									}
+								});
+							}
 
 							/*----------------ADD BLOG-------------------*/
 
 							$scope.AddBlog = function() {
 								var json = {
-									'Email' : $rootScope.LoginEmail,
+									'Email' : $rootScope.LogonEmail,
 									'Title' : $scope.Title.value,
 									'Description' : $scope.Description.value,
 								};

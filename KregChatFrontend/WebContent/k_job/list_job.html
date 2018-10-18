@@ -4,110 +4,107 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <style>
-
-body{ 
-    background-color: #e9eef1;
-    margin: 0px;
-    padding: 0px;
+body {
+	background-color: #e9eef1;
+	margin: 0px;
+	padding: 0px;
 }
 
-@media (min-width: 1200px){
-.container {
-    width: 1170px;
-}
-
+@media ( min-width : 1200px) {
+	.container {
+		width: 1170px;
+	}
 }
 
 * {
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
 }
 
 .row {
-    margin-right: -15px;
-    margin-left: -15px;
+	margin-right: -15px;
+	margin-left: -15px;
 }
 
 .col-xs-12 {
-    width: 100%;
+	width: 100%;
 }
 
 .blog-grids {
-    overflow: hidden;
-    margin: 0 -15px;
+	overflow: hidden;
+	margin: 0 -15px;
 }
 
 .blog-grids .grid {
-    background-color: #fff;
-    width: calc(90% - 90px);
-    float: left;
-    padding: 15px;
-    margin: 20px 15px 15px;
-    border-radius: 10px;
-    -webkit-box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
-    box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+	background-color: #fff;
+	width: calc(90% - 90px);
+	float: left;
+	padding: 15px;
+	margin: 20px 15px 15px;
+	border-radius: 10px;
+	-webkit-box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+	box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
 }
 
 .entry-media img {
-    border-radius: 10px;
-    width: 100%;
-    max-height: 188px;
+	border-radius: 10px;
+	width: 100%;
+	max-height: 188px;
 }
 
 .entry-body {
-    padding: 30px 20px;
+	padding: 30px 20px;
 }
 
 .entry-body .cat {
-    font-family: "Ubuntu", sans-serif;
-    font-size: 12px;
-    font-weight: 600;
-    color: #6220d9;
-    text-transform: uppercase;
+	font-family: "Ubuntu", sans-serif;
+	font-size: 12px;
+	font-weight: 600;
+	color: #6220d9;
+	text-transform: uppercase;
 }
 
 .entry-body h3 {
-    font-size: 21px;
-    font-weight: 600;
-    line-height: 1.30em;
-    margin: 3px 0 0.73em;
+	font-size: 21px;
+	font-weight: 600;
+	line-height: 1.30em;
+	margin: 3px 0 0.73em;
 }
 
 .entry-body h3 a {
-    color: #41516a;
+	color: #41516a;
 }
 
 .entry-body h3 a:hover {
-    color: #6220d9;
-    text-decoration: none;
+	color: #6220d9;
+	text-decoration: none;
 }
 
 .entry-body p {
-    margin-bottom: 2em;
-    color: #90949a;
-    line-height: 1.8em;
+	margin-bottom: 2em;
+	color: #90949a;
+	line-height: 1.8em;
 }
 
 .read-more-date {
-    position: relative;
+	position: relative;
 }
 
 .read-more-date a {
-    font-family: "Oswald", sans-serif;
-    font-size: 16px;
-    font-size: 1.06667rem;
-    font-weight: 600;
-    color: #41516a;
-    text-transform: uppercase;
+	font-family: "Oswald", sans-serif;
+	font-size: 16px;
+	font-size: 1.06667rem;
+	font-weight: 600;
+	color: #41516a;
+	text-transform: uppercase;
 }
 
 .read-more-date .date {
-    position: absolute;
-    right: 0;
-    color: #90949a;
+	position: absolute;
+	right: 0;
+	color: #90949a;
 }
-
 </style>
 <meta charset="ISO-8859-1">
 <title>KregChat:Jobs</title>
@@ -117,33 +114,111 @@ body{
 		Yet</h1>
 
 
-<div class="container"  ng-if="AllJobs.length != 0">
-	<div class="row">
-		<div class="col-md-4" ng-repeat="x in AllJobs">
-                        <div class="blog-grids" >
-                            <div class="grid">
-                                <div class="entry-media">
-                                    <img src="http://www.csshint.com/wp-content/uploads/2017/09/beautiful-buttons-effect.jpg" alt="">
-                                </div>
-                                <div class="entry-body">
-                                    <span class="cat">Job Posted by-{{x.ownerId}}</span>
-                                    <h3><a href="#">{{x.title}}</a></h3>
-                                    <p>{{x.description}}</p>
-                                    <div class="read-more-date">
-                                        <a href="#">Read More..</a>
-                                    </div>
-                                    
-                                     <div class="date" style="color:#9e9c9c;">{{x.date}}</div>
-                                     <br>
-                                    <button class="btn btn-danger" ng-click="DeleteJob(x.id)">Delete</button>
-                                    <br><button class="btn btn-success" ng-click="ApplyJob(x.id)" data-toggle="modal" data-target="#ApplyJobModal">Apply Job</button>
-                                    <br><button class="btn btn-primary" ng-click="EditJob(x.id)" data-toggle="modal" data-target="#editJobModal">Edit</button>
-                                </div>
-                            </div></div></div></div></div>
-                            
-                            
-                            
-                            
+	<!-----------------APPPROVED OR NOT FOR ROLE_ADMIN----------------->
+
+	<div class="container"
+		ng-if="AllJobs.length != 0 && $root.LogonRole == 'ROLE_ADMIN'">
+		<div class="row">
+			<div class="col-md-4" ng-repeat="x in AllJobs  | filter: (otheremail || '') && otheremail">
+				<div class="blog-grids">
+					<div class="grid">
+						<div class="entry-media">
+							<img
+								src="http://www.csshint.com/wp-content/uploads/2017/09/beautiful-buttons-effect.jpg"
+								alt="">
+						</div>
+						<div class="entry-body">
+							<h1 class="alert alert-success"
+								ng-if="x.approved && !$routeParams.param">Approved</h1>
+							<h1 class="alert alert-warning"
+								ng-if="!x.approved && !$routeParams.param">Pending</h1>
+
+							<span class="cat">Job Posted by-{{x.ownerId}}</span>
+							<h3>
+								<a href="#">{{x.title}}</a>
+							</h3>
+							<p>{{x.description}}</p>
+							<div class="read-more-date">
+								<a href="#">Read More..</a>
+							</div>
+
+							<div class="date" style="color: #9e9c9c;">{{x.date}}</div>
+							<br>
+							<!-- 							<button class="btn btn-danger" ng-click="DeleteJob(x.id)">Delete</button> -->
+							<!-- 							<br> -->
+							<!-- 							<button class="btn btn-success" ng-click="ApplyJob(x.id)" -->
+							<!-- 								data-toggle="modal" data-target="#ApplyJobModal">Apply -->
+							<!-- 								Job</button> -->
+							<button class="btn btn-danger" ng-if="x.approved"
+								ng-click="RejectJob(x.id)">Reject</button>
+
+							<div ng-if="!x.approved">
+								<button class="btn btn-danger" ng-click="RejectJob(x.id)">Reject</button>
+								<button class="btn btn-success" ng-click="ApproveJob(x.id)">Approve</button>
+							</div>
+							<button class="btn btn-danger" ng-click="DeleteJob(x.id)">Delete</button>
+
+							<br>
+							<button class="btn btn-primary" ng-click="EditJob(x.id)"
+								data-toggle="modal" data-target="#editJobModal">Edit</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+	<!-----------------APPPROVED OR NOT FOR ROLE_USER----------------->
+
+	<div class="container"
+		ng-if="AllJobs.length != 0 && $root.LogonRole == 'ROLE_USER'">
+				<p ng-show="(AllJobs | filter: otheremail).length == 0" class="alert alert-danger">Nothing here!</p>
+		
+		<div class="row">
+			<div class="col-md-4" ng-if="(otheremail || x.ownerId == $root.LogonEmail)"
+				ng-repeat="x in AllJobs| filter: otheremail">
+				<div class="blog-grids">
+					<div class="grid">
+						<div class="entry-media">
+							<img
+								src="http://www.csshint.com/wp-content/uploads/2017/09/beautiful-buttons-effect.jpg"
+								alt="">
+						</div>
+						<div class="entry-body">
+
+							<h1 class="alert alert-success"
+								ng-if="x.approved && !$routeParams.param && (x.ownerId == $root.LogonEmail || $root.LogonRole == 'ROLE_ADMIN')">Approved</h1>
+							<h1 class="alert alert-warning"
+								ng-if="!x.approved && !$routeParams.param && (x.ownerId == $root.LogonEmail || $root.LogonRole == 'ROLE_ADMIN')">Pending</h1>
+							<span class="cat">Job Posted by-{{x.ownerId}}</span>
+							<h3>
+								<a href="#">{{x.title}}</a>
+							</h3>
+							<p>{{x.description}}</p>
+							<div class="read-more-date">
+								<a href="#">Read More..</a>
+							</div>
+
+							<div class="date" style="color: #9e9c9c;">{{x.date}}</div>
+							<br>
+<!-- 							<button class="btn btn-danger" ng-click="DeleteJob(x.id)">Delete</button> -->
+							<br>
+							<button class="btn btn-success" ng-click="ApplyJob(x.id)"
+								data-toggle="modal" data-target="#ApplyJobModal">Apply
+								Job</button>
+							<br>
+<!-- 							<button class="btn btn-primary" ng-click="EditJob(x.id)" -->
+<!-- 								data-toggle="modal" data-target="#editJobModal">Edit</button> -->
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
 	<div id="editJobModal" class="modal fade" role="dialog">
 		<div class="modal-dialog">
 
@@ -196,9 +271,9 @@ body{
 		</div>
 	</div>
 
-<!-- ---------------------------------------------------------------------------- -->
+	<!-- ---------------------------------------------------------------------------- -->
 
-<div id="ApplyJobModal" class="modal fade" role="dialog">
+	<div id="ApplyJobModal" class="modal fade" role="dialog">
 		<div class="modal-dialog">
 
 			<!-- Modal content-->

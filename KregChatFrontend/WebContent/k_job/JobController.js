@@ -5,16 +5,43 @@ KregChatFrontend
 		.controller(
 				'JobController',
 				[
-						'$scope',
-						'$http',
-						function($scope, $http) {
+					'$scope',
+					'$http',
+					'$routeParams',
+					'$location',
+					'$window',
+					'dataService',
+					'$rootScope',
+						function($scope, $http, $routeParams, dataService, $window, $location, $rootScope) {
+						
+						console.log( $routeParams.otheremail )
+						
+						$scope.otheremail = $routeParams.otheremail;
+						
+						$scope.$routeParams = $routeParams;
+						
+						if( $window.sessionStorage.getItem("currentUser") == null || $window.sessionStorage.getItem("currentUser") == undefined )
+						{
+							
+							$('.modal').modal('hide');
+							$('.modal-backdrop').remove();
+							$location.path("/");
+						}
+						
+						$scope.filterVal = '';
+						
+						$scope.setFilterVal = function(arg)
+						{
+							console.log(arg);
+							$scope.filterVal = arg;
+						}
 
 /*------------------------------------------JOB SCOPE--------------------------------------------------------*/
 
 							$scope.job = {
 								title : "",
 								description : "",
-								email : ""
+								ownerId : $rootScope.LogonEmail
 							}
 							
 /*------------------------------------------SUBMIT ADD JOB--------------------------------------------------------*/
@@ -23,7 +50,7 @@ KregChatFrontend
 							$scope.submit = function() {
 
 								$scope.job.title = $scope.Title.value;
-								$scope.job.email = $scope.Email.value;
+								$scope.job.email = $rootScope.LogonEmail;
 								$scope.job.description = $scope.Description.value;
 
 								console.log($scope.job);
@@ -53,6 +80,146 @@ KregChatFrontend
 
 										});
 
+							}
+
+							
+							
+							
+							
+/*---------------------------------------------------------------------------------------------------------------*/
+						
+/*----------------APPROVE BLOG-------------------*/
+
+							
+							$scope.ApproveJob = function(arg)
+							{
+								var json = 
+										{
+										'id': arg
+										};
+								
+								console.log(json);
+								//alert(json);
+								
+								$http({method:'post',url:BASE_URL + '/approveJob', data: json, headers: {'Content-Type': 'application/json'}}).then(function(data){
+									console.log( data )
+									
+									switch( data.data.msg )
+									{
+									case 'Success':
+										
+										swal("Job Approved", "Congratulations", "success")
+										
+										$http({method:'get',url:BASE_URL + '/fetchAllJobs', headers: {'Content-Type': 'application/json'}})
+										.then(function(resp){
+											console.log( resp.data )
+										
+											$scope.AllJobs = resp.data;
+										},function(resp){
+											
+											console.log( "fetchAllJobs Error" )
+										});
+										
+										break;
+										
+									case 'Failure':
+										swal("Job Approval Failure", "Something went wrong!", "error")
+										break;
+									}
+									
+								},function(data){
+									console.log( data )
+									
+									switch( data.data.msg )
+									{
+									case 'Success':
+										
+										swal("Job Approved", "Congratulations", "success")
+										
+										$http({method:'get',url:BASE_URL + '/fetchAllJobs', headers: {'Content-Type': 'application/json'}})
+										.then(function(resp){
+											console.log( resp.data )
+										
+											$scope.AllJobs = resp.data;
+										},function(resp){
+											
+											console.log( "fetchAllJobs Error" )
+										});
+										
+										break;
+										
+									case 'Failure':
+										swal("Job Approval Failure", "Something went wrong!", "error")
+										break;
+									}
+								});
+							}
+							
+							/*----------------REJECT BLOG-------------------*/
+
+							
+							$scope.RejectJob = function(arg)
+							{
+								var json = 
+										{
+										'id': arg
+										};
+								
+								console.log(json);
+								//alert(json);
+								
+								$http({method:'post',url:BASE_URL + '/rejectJob', data: json, headers: {'Content-Type': 'application/json'}}).then(function(data){
+									console.log( data )
+									
+									switch( data.data.msg )
+									{
+									case 'Success':
+										
+										swal("Job Rejected", "Congratulations", "success")
+										
+										$http({method:'get',url:BASE_URL + '/fetchAllJobs', headers: {'Content-Type': 'application/json'}})
+										.then(function(resp){
+											console.log( resp.data )
+										
+											$scope.AllJobs = resp.data;
+										},function(resp){
+											
+											console.log( "fetchAllJobs Error" )
+										});
+										
+										break;
+										
+									case 'Failure':
+										swal("Job Reject Failure", "Something went wrong!", "error")
+										break;
+									}
+									
+								},function(data){
+									console.log( data )
+									
+									switch( data.data.msg )
+									{
+									case 'Success':
+										
+										swal("Job Rejected", "Congratulations", "success")
+										
+										$http({method:'get',url:BASE_URL + '/fetchAllJobs', headers: {'Content-Type': 'application/json'}})
+										.then(function(resp){
+											console.log( resp.data )
+										
+											$scope.AllJobs = resp.data;
+										},function(resp){
+											
+											console.log( "fetchAllJobs Error" )
+										});
+										
+										break;
+										
+									case 'Failure':
+										swal("Job Reject Failure", "Something went wrong!", "error")
+										break;
+									}
+								});
 							}
 
 							
@@ -126,7 +293,7 @@ KregChatFrontend
 
 							$scope.AddJob = function() {
 								var json = {
-									"Email" : $scope.Email.value,
+									"Email" : $rootScope.LogonEmail,
 									"Title" : $scope.Title.value,
 									"Description" : $scope.Description.value,
 
@@ -258,7 +425,7 @@ KregChatFrontend
 							{
 								var json = {
 										'id' : $scope.id,
-										"Email" : $scope.Email.value,
+										"Email" : $rootScope.LogonEmail,
 								};
 
 								console.log(json);

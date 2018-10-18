@@ -13,7 +13,16 @@ public class Job
 	private String description;
 	private String title;
 	private String date;
+	private boolean approved = false;
+
 	
+	public boolean isApproved() {
+		return approved;
+	}
+	public void setApproved(boolean approved) {
+		this.approved = approved;
+	}
+
 	private List<String> applicants = new ArrayList<String>();
 	
 	public List<String> getApplicants() {

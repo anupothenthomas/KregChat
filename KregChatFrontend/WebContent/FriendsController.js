@@ -3,305 +3,319 @@
  */
 
 KregChatFrontend.controller('FriendsController', [
-		'$scope',
-		'$http',
-		function($scope, $http) {
+				'$scope',
+				'$location',
+				'$window',
+				'$http',
+				'$rootScope',
+				function($scope , $location, $window , $http, $rootScope) {
 
-			console.log('Friend Controller')
-
-			$scope.Email = {
-				value : '',
-				error : true,
-				touched : false,
-				validate : function() {
-					this.touched = true;
-					var reg = /\S+@\S+\.\S+/;
-					this.error = !reg.test(this.value);
-				}
-			}
-
-			$scope.Connecteros = function() {
-				console.log("This is friends connector")
-
-				var json = {
-					"myemail" : $scope.Email.value,
-				}
-
-				console.log(json);
-
-				$http({
-					method : 'post',
-					url : BASE_URL + 'getAllUsersExceptMe',
-					data : json,
-					headers : {
-						'Content-Type' : 'application/json'
-					}
-				}).then(function(data) {
+					console.log('Friend Controller')
 					
-					console.log("getAllUsersExceptMe Success Response:")
+	if( $window.sessionStorage.getItem("currentUser") == null || $window.sessionStorage.getItem("currentUser") == undefined )
+	{
+		
+		$('.modal').modal('hide');
+		$('.modal-backdrop').remove();
+		$location.path("/");
+	}
 					
-					console.log(data)
-
-					switch (data.data.msg) {
-					case 'Success':
-
-						console.log( data.data )
-						
-						$scope.AllFriends = data.data.list;
-						
-						break;
-
-					case 'Failure':
-						swal("Failed", "Something went wrong!", "error")
-						break;
+					console.log($rootScope)
+					
+					
+						$scope.Email = {
+						value : $rootScope.LogonEmail,
+						error : true,
+						touched : false,
+						validate : function() {
+							this.touched = true;
+							var reg = /\S+@\S+\.\S+/;
+							this.error = !reg.test(this.value);
+						}
 					}
 
-				}, function(data) {
-					swal("Failed", "Something went wrong!", "error")
-				});
-			}
+//					$scope.Connecteros = function() {
+						console.log("This is friends connector")
 
-			/*-----------------------------------------ALL FRIENDS ARRAY--------------------------------------------*/
+						var json = {
+							"myemail" : $scope.Email.value,
+						}
 
-			$scope.AllFriends = [];
-			/*-----------------------------------------FETCH ALL FRIENDS--------------------------------------------*/
+						console.log(json);
 
-			$scope.fetchAllFriends = function() {
-
-				$http(
-						{
-							method : 'get',
-							url : BASE_URL + 'fetchAllFriends?myemail='
-									+ $scope.Email.value,
+						$http({
+							method : 'post',
+							url : BASE_URL + 'getAllUsersExceptMe',
+							data : json,
 							headers : {
 								'Content-Type' : 'application/json'
 							}
-						}).then(function(resp) {
-					console.log(resp.data)
+						}).then(function(data) {
+							
+							console.log("getAllUsersExceptMe Success Response:")
+							
+							console.log(data)
 
-					$scope.AllFriends = resp.data;
-				}, function(resp) {
+							switch (data.data.msg) {
+							case 'Success':
 
-					console.log("fetchAllFriends Error")
-				});
+								console.log( data.data )
+								
+								$scope.AllFriends = data.data.list;
+								
+								break;
 
-			}
+							case 'Failure':
+								swal("Failed", "Something went wrong!", "error")
+								break;
+							}
 
-//			$scope.fetchAllFriends();
-			/*-----------------------------------------ADD FRIEND--------------------------------------------*/
+						}, function(data) {
+							swal("Failed", "Something went wrong!", "error")
+						});
+//					}
 
-			$scope.AddFriend = function(arg2) {
-				var json = {
-					'alphaEmail' : $scope.Email.value,
-					'omegaEmail' : arg2
-				};
+					/*-----------------------------------------ALL FRIENDS ARRAY--------------------------------------------*/
 
-				console.log(json);
-				// alert(json);
+					$scope.AllFriends = [];
+					/*-----------------------------------------FETCH ALL FRIENDS--------------------------------------------*/
 
-				$http({
-					method : 'post',
-					url : BASE_URL + '/addFriend',
-					data : json,
-					headers : {
-						'Content-Type' : 'application/json'
-					}
-				}).then(function(data) {
-					console.log(data)
+					$scope.fetchAllFriends = function() {
 
-					switch (data.data.msg) {
-					case 'Success':
+						$http(
+								{
+									method : 'get',
+									url : BASE_URL + 'fetchAllFriends?myemail='
+											+ $scope.Email.value,
+									headers : {
+										'Content-Type' : 'application/json'
+									}
+								}).then(function(resp) {
+							console.log(resp.data)
 
-						swal("Friend Request Sent", "", "success")
+							$scope.AllFriends = resp.data;
+						}, function(resp) {
 
-						$scope.Connecteros();
+							console.log("fetchAllFriends Error")
+						});
 
-						break;
-
-					case 'Failure':
-						swal("Failed", "Something went wrong!", "error")
-						break;
-					}
-
-				}, function(data) {
-					console.log(data)
-
-					switch (data.data.msg) {
-					case 'Success':
-
-						swal("Friend Request Sent", "", "success")
-
-						$scope.fetchAllFriends();
-
-						break;
-
-					case 'Failure':
-						swal("Failed", "Something went wrong!", "error")
-						break;
-					}
-				});
-			}
-
-			/*-----------------------------------------UN-FRIEND--------------------------------------------*/
-
-			$scope.UnFriend = function(arg2) {
-				var json = {
-					'alphaEmail' : $scope.Email.value,
-					'omegaEmail' : arg2
-				};
-
-				console.log(json);
-				// alert(json);
-
-				$http({
-					method : 'post',
-					url : BASE_URL + '/unFriend',
-					data : json,
-					headers : {
-						'Content-Type' : 'application/json'
-					}
-				}).then(function(data) {
-					console.log(data)
-
-					switch (data.data.msg) {
-					case 'Success':
-
-						swal("Friend Removed", "", "success")
-
-						$scope.fetchAllFriends();
-
-						break;
-
-					case 'Failure':
-						swal("Failed", "Something went wrong!", "error")
-						break;
 					}
 
-				}, function(data) {
-					console.log(data)
+//					$scope.fetchAllFriends();
+					/*-----------------------------------------ADD FRIEND--------------------------------------------*/
 
-					switch (data.data.msg) {
-					case 'Success':
+					$scope.AddFriend = function(arg1, arg2) {
+						var json = {
+							'alphaEmail' : arg1,
+							'omegaEmail' : arg2
+						};
 
-						swal("Friend Removed", "", "success")
+						console.log(json);
+						// alert(json);
 
-						$scope.fetchAllFriends();
+						$http({
+							method : 'post',
+							url : BASE_URL + '/addFriend',
+							data : json,
+							headers : {
+								'Content-Type' : 'application/json'
+							}
+						}).then(function(data) {
+							console.log(data)
 
-						break;
+							switch (data.data.msg) {
+							case 'Success':
 
-					case 'Failure':
-						swal("Failed", "Something went wrong!", "error")
-						break;
-					}
-				});
-			}
+								swal("Friend Request Sent", "", "success")
 
-			/*-----------------------------------------UNDO-FRIEND-REQUEST-------------------------------------------*/
+								$scope.Connecteros();
 
-			$scope.UndoFriend = function(arg2) {
-				var json = {
-					'alphaEmail' : $scope.Email.value,
-					'omegaEmail' : arg2
-				};
+								break;
 
-				console.log(json);
-				// alert(json);
+							case 'Failure':
+								swal("Failed", "Something went wrong!", "error")
+								break;
+							}
 
-				$http({
-					method : 'post',
-					url : BASE_URL + '/undoFriend',
-					data : json,
-					headers : {
-						'Content-Type' : 'application/json'
-					}
-				}).then(function(data) {
-					console.log(data)
+						}, function(data) {
+							console.log(data)
 
-					switch (data.data.msg) {
-					case 'Success':
+							switch (data.data.msg) {
+							case 'Success':
 
-						swal("Friend Request Undone", "", "success")
+								swal("Friend Request Sent", "", "success")
 
-						$scope.Connecteros();
+								$scope.fetchAllFriends();
 
-						break;
+								break;
 
-					case 'Failure':
-						swal("Failed", "Something went wrong!", "error")
-						break;
-					}
-
-				}, function(data) {
-					console.log(data)
-
-					switch (data.data.msg) {
-					case 'Success':
-
-						swal("Friend Request Undone", "", "success")
-
-						$scope.Connecteros();
-
-						break;
-
-					case 'Failure':
-						swal("Failed", "Something went wrong!", "error")
-						break;
-					}
-				});
-			}
-
-			/*-----------------------------------------UNDO-FRIEND-REQUEST-------------------------------------------*/
-
-			$scope.AcceptFriend = function(arg2) {
-				var json = {
-					'alphaEmail' : arg2,
-					'omegaEmail' : $scope.Email.value
-				};
-
-				console.log(json);
-				// alert(json);
-
-				$http({
-					method : 'post',
-					url : BASE_URL + '/acceptFriend',
-					data : json,
-					headers : {
-						'Content-Type' : 'application/json'
-					}
-				}).then(function(data) {
-					console.log(data)
-
-					switch (data.data.msg) {
-					case 'Success':
-
-						swal("Friend Request Accepted", "", "success")
-
-						$scope.Connecteros();
-
-						break;
-
-					case 'Failure':
-						swal("Failed", "Something went wrong!", "error")
-						break;
+							case 'Failure':
+								swal("Failed", "Something went wrong!", "error")
+								break;
+							}
+						});
 					}
 
-				}, function(data) {
-					console.log(data)
+					/*-----------------------------------------UN-FRIEND--------------------------------------------*/
 
-					switch (data.data.msg) {
-					case 'Success':
+					$scope.UnFriend = function(arg1, arg2) {
+						var json = {
+							'alphaEmail' : arg1,
+							'omegaEmail' : arg2
+						};
 
-						swal("Friend Request Accepted", "", "success")
+						console.log(json);
+						// alert(json);
 
-						$scope.Connecteros();
+						$http({
+							method : 'post',
+							url : BASE_URL + '/unFriend',
+							data : json,
+							headers : {
+								'Content-Type' : 'application/json'
+							}
+						}).then(function(data) {
+							console.log(data)
 
-						break;
+							switch (data.data.msg) {
+							case 'Success':
 
-					case 'Failure':
-						swal("Failed", "Something went wrong!", "error")
-						break;
+								swal("Friend Removed", "", "success")
+
+								$scope.fetchAllFriends();
+
+								break;
+
+							case 'Failure':
+								swal("Failed", "Something went wrong!", "error")
+								break;
+							}
+
+						}, function(data) {
+							console.log(data)
+
+							switch (data.data.msg) {
+							case 'Success':
+
+								swal("Friend Removed", "", "success")
+
+								$scope.fetchAllFriends();
+
+								break;
+
+							case 'Failure':
+								swal("Failed", "Something went wrong!", "error")
+								break;
+							}
+						});
 					}
-				});
-			}
 
-		} ]);
+					/*-----------------------------------------UNDO-FRIEND-REQUEST-------------------------------------------*/
+
+					$scope.UndoFriend = function(arg1, arg2) {
+						var json = {
+							'alphaEmail' : arg1,
+							'omegaEmail' : arg2
+						};
+
+						console.log(json);
+						// alert(json);
+
+						$http({
+							method : 'post',
+							url : BASE_URL + '/undoFriend',
+							data : json,
+							headers : {
+								'Content-Type' : 'application/json'
+							}
+						}).then(function(data) {
+							console.log(data)
+
+							switch (data.data.msg) {
+							case 'Success':
+
+								swal("Friend Request Undone", "", "success")
+
+								$scope.Connecteros();
+
+								break;
+
+							case 'Failure':
+								swal("Failed", "Something went wrong!", "error")
+								break;
+							}
+
+						}, function(data) {
+							console.log(data)
+
+							switch (data.data.msg) {
+							case 'Success':
+
+								swal("Friend Request Undone", "", "success")
+
+								$scope.Connecteros();
+
+								break;
+
+							case 'Failure':
+								swal("Failed", "Something went wrong!", "error")
+								break;
+							}
+						});
+					}
+
+					/*-----------------------------------------ACCEPT-FRIEND-REQUEST-------------------------------------------*/
+
+					$scope.AcceptFriend = function(arg1, arg2) {
+						var json = {
+							'alphaEmail' : arg1,
+							'omegaEmail' : arg2
+						};
+
+						console.log(json);
+						// alert(json);
+
+						$http({
+							method : 'post',
+							url : BASE_URL + '/acceptFriend',
+							data : json,
+							headers : {
+								'Content-Type' : 'application/json'
+							}
+						}).then(function(data) {
+							console.log(data)
+
+							switch (data.data.msg) {
+							case 'Success':
+
+								swal("Friend Request Accepted", "", "success")
+
+								$scope.Connecteros();
+
+								break;
+
+							case 'Failure':
+								swal("Failed", "Something went wrong!", "error")
+								break;
+							}
+
+						}, function(data) {
+							console.log(data)
+
+							switch (data.data.msg) {
+							case 'Success':
+
+								swal("Friend Request Accepted", "", "success")
+
+								$scope.Connecteros();
+
+								break;
+
+							case 'Failure':
+								swal("Failed", "Something went wrong!", "error")
+								break;
+							}
+						});
+					}
+
+				} ]);

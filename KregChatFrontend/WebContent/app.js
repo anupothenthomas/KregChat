@@ -7,8 +7,14 @@ var BASE_URL = "http://localhost:8081/KregChatBackend/"
 
 KregChatFrontend.config(function($routeProvider) {
 	$routeProvider
-
+	.when('/',{
+		templateUrl : 'home.html',
+		controller : 'HomeController'
+	})
 	.when('/blog', {
+		templateUrl : 'k_blog/blog.html',
+		controller : 'BlogController'
+	}).when('/blog/:otheremail', {
 		templateUrl : 'k_blog/blog.html',
 		controller : 'BlogController'
 	}).when('/create_blog', {
@@ -16,6 +22,9 @@ KregChatFrontend.config(function($routeProvider) {
 		controller : 'BlogController'
 	}).when('/create_forum', {
 		templateUrl : 'k_forum/create_forum.html',
+		controller : 'ForumController'
+	}).when('/list_forum/:otheremail', {
+		templateUrl : 'k_forum/list_forum.html',
 		controller : 'ForumController'
 	}).when('/list_forum', {
 		templateUrl : 'k_forum/list_forum.html',
@@ -75,10 +84,11 @@ KregChatFrontend
 							{
 								$rootScope.LogonEmail = JSON.parse( $window.sessionStorage.getItem("currentUser") ).email;
 								$rootScope.LogonRole = JSON.parse( $window.sessionStorage.getItem("currentUser") ).role;
-																
+								
 								$rootScope.LoginStats = true;
 								
 							}
+							
 							else
 							{
 								window.setTimeout(function(){

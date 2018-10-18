@@ -1,181 +1,205 @@
 /**
  * 
  */
-KregChatFrontend.controller('ChatController', [
-		'$scope',
-		'$http',
-		function($scope, $http) {
+KregChatFrontend
+		.controller(
+				'ChatController',
+				[
+						'$scope',
+						'$location',
+						'$window',
+						'$http',
+						'$rootScope',
+						function($scope, $location, $window, $http, $rootScope) {
 
-			console.log('Chat Controller')
+							console.log('Chat Controller')
+							
+							if ($window.sessionStorage.getItem("currentUser") == null
+									|| $window.sessionStorage
+											.getItem("currentUser") == undefined) {
 
-			$scope.Email = {
-				value : '',
-				error : true,
-				touched : false,
-				validate : function() {
-					this.touched = true;
-					var reg = /\S+@\S+\.\S+/;
-					this.error = !reg.test(this.value);
-				}
-			}
+								$('.modal').modal('hide');
+								$('.modal-backdrop').remove();
+								$location.path("/");
+							}
 
-			$scope.EMessage = {
-				value : '',
-				error : true,
-				touched : false,
-				validate : function() {
-					this.touched = true;
-					var reg = /^.{2,160}$/;
-					this.error = !reg.test(this.value);
-				}
-			}
+							console.log($rootScope)
 
-			// var socket = new WebSocket(
-			// "ws://localhost:8081/KregChatBackend/chat");
-
-			$scope.onConnectClick = function() {
-				var socket = new WebSocket(
-						"ws://localhost:8081/KregChatBackend/chat");
-
-				/*------------------------- SOCKET OPEN-------------------------*/
-
-				socket.onopen = function() {
-
-					console.log(socket)
-
-					var json = {
-						"from" : "",
-						"msg" : "connect:" + $scope.Email.value
-					}
-
-					socket.send(JSON.stringify(json))
-
-					socket.onmessage = function(data) {
-
-						if (data.data.startsWith("disconnect")) {
-
-							console.log("disconnect");
-
-							console.log(data.data.split(":")[1]);
-
-							$scope.$apply($scope.AllOnliners.splice(
-									$scope.AllOnliners.indexOf(data.data
-											.split(":")[1]), 1));
-
-						} else if (data.data.startsWith("connect")) {
-
-							console.log("connect");
-							console.log(data.data.split(":")[1]);
-
-							$scope.$apply($scope.AllOnliners.push(data.data
-									.split(":")[1]));
-
-						} else {
-
-							$scope.$apply($scope.messages.push(JSON
-									.parse(data.data)));
-
-						}	
-
-					}
-
-					window.setTimeout(function() {
-
-						$scope.$apply($scope.fetchAllOnliners());
-
-					}, 2000);
-
-				}
-
-				/*------------------------- SOCKET CLOSE-------------------------*/
-
-				socket.onclose = function() {
-					if (socket.readyState === WebSocket.OPEN) {
-						socket.close();
-						console.log("WebSocket: Disconnected");
-
-					}
-
-				}
-
-				$scope.EMessage = {
-					value : '',
-					error : true,
-					touched : false,
-					validate : function() {
-						this.touched = true;
-						var reg = /^.{2,160}$/;
-						this.error = !reg.test(this.value);
-					}
-				}
-
-				$scope.messages = [];
-
-				$scope.AllOnliners = [];
-
-				/*-----------------------------------------------*/
-
-				$scope.fetchAllOnliners = function() {
-
-					$http(
-							{
-								method : 'get',
-								url : BASE_URL + 'fetchAllOnliners?myemail='
-										+ $scope.Email.value,
-								headers : {
-									'Content-Type' : 'application/json'
+							$scope.Email = {
+								value : '',
+								error : true,
+								touched : false,
+								validate : function() {
+									this.touched = true;
+									var reg = /\S+@\S+\.\S+/;
+									this.error = !reg.test(this.value);
 								}
-							}).then(function(resp) {
-						console.log(resp.data)
+							}
 
-						$scope.AllOnliners = resp.data;
-					}, function(resp) {
+							$scope.EMessage = {
+								value : '',
+								error : true,
+								touched : false,
+								validate : function() {
+									this.touched = true;
+									var reg = /^.{2,160}$/;
+									this.error = !reg.test(this.value);
+								}
+							}
 
-						console.log("fetchAllOnliners Error")
-					});
+							var socket = new WebSocket(
+									"ws://localhost:8081/KregChatBackend/chat");
 
-				}
+							// $scope.onConnectClick = function() {
+							// var socket = new WebSocket(
+							// "ws://localhost:8081/KregChatBackend/chat");
 
-				$scope.fetchAllOnliners();
+							/*------------------------- SOCKET OPEN-------------------------*/
 
-				/*-----------------------------------------------*/
+							socket.onopen = function() {
 
-				$scope.sendMessage = function() {
+								console.log(socket)
 
-					if (WebSocket.readyState != WebSocket.OPEN) {
+								var json = {
+									"from" : $rootScope.LogonEmail,
+									"msg" : "connect:" + $rootScope.LogonEmail
+								}
 
-						var json = {
-							"from" : $scope.Email.value,
-							"msg" : $scope.EMessage.value
-						}
+								socket.send(JSON.stringify(json))
 
-						console.log(json);
-						($scope.messages.push(json));
+								socket.onmessage = function(data) {
 
-						socket.send(JSON.stringify(json));
+									if (data.data.startsWith("disconnect")) {
 
-					}
-				}
-			}
+										console.log("disconnect");
 
-			$scope.currentChatHeads = []
+										console.log(data.data.split(":")[1]);
 
-			$scope.addChatHead = function(arg) {
+										$scope
+												.$apply($scope.AllOnliners
+														.splice(
+																$scope.AllOnliners
+																		.indexOf(data.data
+																				.split(":")[1]),
+																1));
 
-				if ($scope.currentChatHeads.indexOf(arg) == -1)
-					$scope.currentChatHeads.push(arg);
+									} else if (data.data.startsWith("connect")) {
 
-				console.log($scope.currentChatHeads)
+										console.log("connect");
+										console.log(data.data.split(":")[1]);
 
-			}
+										$scope.$apply($scope.AllOnliners
+												.push(data.data.split(":")[1]));
 
-			$scope.closeChatHead = function(arg) {
+									} else {
 
-				if ($scope.currentChatHeads.indexOf(arg) != -1)
-					$scope.currentChatHeads.splice( $scope.currentChatHeads.indexOf(arg) ,1);
+										$scope.$apply($scope.messages.push(JSON
+												.parse(data.data)));
 
-				console.log($scope.currentChatHeads)
+									}
 
-			}
+								}
 
-		} ]);
+								window.setTimeout(function() {
+
+									$scope.$apply($scope.fetchAllOnliners());
+
+								}, 2000);
+
+							}
+
+							/*------------------------- SOCKET CLOSE-------------------------*/
+
+							socket.onclose = function() {
+								if (socket.readyState === WebSocket.OPEN) {
+									socket.close();
+									console.log("WebSocket: Disconnected");
+
+								}
+
+							}
+
+							$scope.EMessage = {
+								value : '',
+								error : true,
+								touched : false,
+								validate : function() {
+									this.touched = true;
+									var reg = /^.{2,160}$/;
+									this.error = !reg.test(this.value);
+								}
+							}
+
+							$scope.messages = [];
+
+							$scope.AllOnliners = [];
+
+							/*-----------------------------------------------*/
+
+							$scope.fetchAllOnliners = function() {
+
+								$http(
+										{
+											method : 'get',
+											url : BASE_URL
+													+ 'fetchAllOnliners?myemail='
+													+ $rootScope.LogonEmail,
+											headers : {
+												'Content-Type' : 'application/json'
+											}
+										}).then(function(resp) {
+									console.log(resp.data)
+
+									$scope.AllOnliners = resp.data;
+								}, function(resp) {
+
+									console.log("fetchAllOnliners Error")
+								});
+
+							}
+
+							$scope.fetchAllOnliners();
+
+							/*-----------------------------------------------*/
+
+							$scope.sendMessage = function() {
+
+								if (WebSocket.readyState != WebSocket.OPEN) {
+
+									var json = {
+										"from" : $rootScope.LogonEmail,
+										"msg" : $scope.EMessage.value
+									}
+
+									console.log(json);
+									($scope.messages.push(json));
+
+									socket.send(JSON.stringify(json));
+
+								}
+							}
+							//			}
+
+							$scope.currentChatHeads = []
+
+							$scope.addChatHead = function(arg) {
+
+								if ($scope.currentChatHeads.indexOf(arg) == -1)
+									$scope.currentChatHeads.push(arg);
+
+								console.log($scope.currentChatHeads)
+
+							}
+
+							$scope.closeChatHead = function(arg) {
+
+								if ($scope.currentChatHeads.indexOf(arg) != -1)
+									$scope.currentChatHeads.splice(
+											$scope.currentChatHeads
+													.indexOf(arg), 1);
+
+								console.log($scope.currentChatHeads)
+
+							}
+
+						} ]);

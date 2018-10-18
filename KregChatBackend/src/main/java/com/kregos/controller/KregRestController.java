@@ -109,8 +109,8 @@ public class KregRestController {
 
 			Blog b = new Blog();
 
-			if (blogOb.get("email") != null)
-				b.setOwnerId(blogOb.get("email").toString());
+			if (blogOb.get("ownerId") != null)
+				b.setOwnerId(blogOb.get("ownerId").toString());
 			if (blogOb.get("title") != null)
 				b.setTitle(blogOb.get("title").toString());
 			if (blogOb.get("description") != null)
@@ -200,8 +200,8 @@ public class KregRestController {
 
 			Forum b = new Forum();
 
-			if (joObject.get("email") != null)
-				b.setOwnerId(joObject.get("email").toString());
+			if (joObject.get("ownerId") != null)
+				b.setOwnerId(joObject.get("ownerId").toString());
 			if (joObject.get("title") != null)
 				b.setTitle(joObject.get("title").toString());
 			if (joObject.get("description") != null)
@@ -705,7 +705,78 @@ public class KregRestController {
 
 		return new ResponseEntity<String>("{\"msg\": \"Success\"}", HttpStatus.OK);
 	}
+/*---------------------------APPROVE JOB----------------------------------------*/
+	
+	
+	@RequestMapping(value="/approveJob",method=RequestMethod.POST)
+	public ResponseEntity<String> approveJob( @RequestBody String body  )
+	{
+		System.out.println("Approving Job....");
+		
+		try
+		{
+			JSONParser jp = new JSONParser();
+			
+			JSONObject joObject = (JSONObject)jp.parse(body);
+		
+			System.out.println(joObject);
+		
+			Job j = new Job();
+			j.setId(joObject.get("id").toString());
+			
+			j = jdao.find(j);
+			
+			j.setApproved(true);
+			
+			jdao.update(j);
+			
+		}
+		catch( Exception e )
+		{
+			e.printStackTrace();
+			return new ResponseEntity<String>("{\"msg\": \"Failure\"}", HttpStatus.OK);
+		}
+		
+		return new ResponseEntity<String>("{\"msg\": \"Success\"}", HttpStatus.OK);
+	}
+	
+	/*---------------------------REJECT JOB------------------------*/
 
+	@RequestMapping(value="/rejectJob",method=RequestMethod.POST)
+	public ResponseEntity<String> rejectJob( @RequestBody String body  )
+	{
+		System.out.println("Rejecting Jobs....");
+		
+		try
+		{
+			JSONParser jp = new JSONParser();
+			
+			JSONObject joObject = (JSONObject)jp.parse(body);
+		
+			System.out.println(joObject);
+		
+			Job j = new Job();
+			j.setId(joObject.get("id").toString());
+			
+			j = jdao.find(j);
+			
+			j.setApproved(false);
+			
+			jdao.update(j);
+			
+		}
+		catch( Exception e )
+		{
+			e.printStackTrace();
+			return new ResponseEntity<String>("{\"msg\": \"Failure\"}", HttpStatus.OK);
+		}
+		
+		return new ResponseEntity<String>("{\"msg\": \"Success\"}", HttpStatus.OK);
+	}
+	
+	
+	
+	
 	/*---------------------------APPLY JOB------------------------*/
 
 	@RequestMapping(value = "/applyJob", method = RequestMethod.POST)
@@ -821,6 +892,136 @@ public class KregRestController {
 		}
 		
 		return new ResponseEntity<String>("{\"msg\": \"Failure\"}", HttpStatus.OK);
+	}
+	
+	
+	@RequestMapping(value="/approveForum",method=RequestMethod.POST)
+	public ResponseEntity<String> approveForum( @RequestBody String body  )
+	{
+		System.out.println("Approving Forum.......");
+		
+		try
+		{
+			JSONParser jp = new JSONParser();
+			
+			JSONObject joObject = (JSONObject)jp.parse(body);
+		
+			System.out.println(joObject);
+		
+			Forum u = new Forum();
+			u.setId(joObject.get("id").toString());
+			
+			u = fdao.find(u);
+			
+			u.setApproved(true);
+			
+			fdao.update(u);
+			
+		}
+		catch( Exception e )
+		{
+			e.printStackTrace();
+			return new ResponseEntity<String>("{\"msg\": \"Failure\"}", HttpStatus.OK);
+		}
+		
+		return new ResponseEntity<String>("{\"msg\": \"Success\"}", HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/rejectForum",method=RequestMethod.POST)
+	public ResponseEntity<String> rejectForum( @RequestBody String body  )
+	{
+		System.out.println("Rejecting Forum......");
+		
+		try
+		{
+			JSONParser jp = new JSONParser();
+			
+			JSONObject joObject = (JSONObject)jp.parse(body);
+		
+			System.out.println(joObject);
+		
+			Forum u = new Forum();
+			u.setId(joObject.get("id").toString());
+			
+			u = fdao.find(u);
+			
+			u.setApproved(false);
+			
+			fdao.update(u);
+			
+		}
+		catch( Exception e )
+		{
+			e.printStackTrace();
+			return new ResponseEntity<String>("{\"msg\": \"Failure\"}", HttpStatus.OK);
+		}
+		
+		return new ResponseEntity<String>("{\"msg\": \"Success\"}", HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/approveBlog",method=RequestMethod.POST)
+	public ResponseEntity<String> approveBlog( @RequestBody String body  )
+	{
+		System.out.println("Approving Blog...");
+		
+		try
+		{
+			JSONParser jp = new JSONParser();
+			
+			JSONObject joObject = (JSONObject)jp.parse(body);
+		
+			System.out.println(joObject);
+		
+			Blog u = new Blog();
+			u.setId(joObject.get("id").toString());
+			
+			u = bdao.find(u);
+			
+			u.setApproved(true);
+			
+			bdao.update(u);
+			
+		}
+		catch( Exception e )
+		{
+			e.printStackTrace();
+			return new ResponseEntity<String>("{\"msg\": \"Failure\"}", HttpStatus.OK);
+		}
+		
+		return new ResponseEntity<String>("{\"msg\": \"Success\"}", HttpStatus.OK);
+	}
+	
+	
+	@RequestMapping(value="/rejectBlog",method=RequestMethod.POST)
+	public ResponseEntity<String> rejectBlog( @RequestBody String body  )
+	{
+		System.out.println("Rejecting Blog......");
+		
+		try
+		{
+			JSONParser jp = new JSONParser();
+			
+			JSONObject joObject = (JSONObject)jp.parse(body);
+		
+			System.out.println(joObject);
+		
+			Blog u = new Blog();
+			u.setId(joObject.get("id").toString());
+			
+			u = bdao.find(u);
+			
+			u.setApproved(false);
+			
+			bdao.update(u);
+			
+		}
+		catch( Exception e )
+		{
+			e.printStackTrace();
+			return new ResponseEntity<String>("{\"msg\": \"Failure\"}", HttpStatus.OK);
+		}
+		
+		return new ResponseEntity<String>("{\"msg\": \"Success\"}", HttpStatus.OK);
 	}
 
 }

@@ -14,6 +14,7 @@ public class Blog {
 	private String date;
 	private String ownerId;
 	private boolean approved = false;
+	
 
 	public String getId() {
 		return id;

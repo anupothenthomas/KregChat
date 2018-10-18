@@ -281,15 +281,15 @@ img {
 		<td>
 			<h5 class=" text-center">Share your thoughts to another</h5>
 
-			<button id="btnConnect"
-				ng-disabled='!(!Email.error && Email.touched)'
-				ng-click="onConnectClick()" class="btn btn-success">Connect</button>&nbsp;&nbsp;
-			<input id="Email" type="text" class="Email form-control write_msg"
-			ng-change="Email.validate()" ng-model="Email.value"
-			placeholder="Type your email" />
-			<div ng-if="Email.touched && Email.error" class="text text-default">
-				<h1>Email must be valid</h1>
-			</div>
+<!-- 			<button id="btnConnect" -->
+<!-- 				ng-disabled='!(!Email.error && Email.touched)' -->
+<!-- 				ng-click="onConnectClick()" class="btn btn-success">Connect</button>&nbsp;&nbsp; -->
+<!-- 			<input id="Email" type="text" class="Email form-control write_msg" -->
+<!-- 			ng-change="Email.validate()" ng-model="Email.value" -->
+<!-- 			placeholder="Type your email" /> -->
+<!-- 			<div ng-if="Email.touched && Email.error" class="text text-default"> -->
+<!-- 				<h1>Email must be valid</h1> -->
+<!-- 			</div> -->
 		</td> <br> <br>
 
 		<div class="messaging">
@@ -304,7 +304,7 @@ img {
 						</div>
 					</div>
 					<div class="inbox_chat">
-						<div class="chat_list active_chat" ng-repeat="y in AllOnliners"
+						<div class="chat_list active_chat" ng-if="x.email != $root.LogonEmail" ng-repeat="y in AllOnliners"
 							style="cursor: pointer;">
 							<div class="chat_people" ng-click="addChatHead(y)">
 								<div class="chat_img">
